@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Login.css"
+import '@blaze/atoms'
 
 export const Register = (props) => {
     const [user, setUser] = useState({
@@ -54,8 +55,24 @@ export const Register = (props) => {
         setUser(copy)
     }
 
+    // const pwValidate =(evt, exy)=>{
+    //     const pwOne = evt.target.value
+    //     const pwTwo =exy.target.value
+
+    //     if(pwOne ===pwTwo){
+
+    //         updateUser(pwOne)
+    //     }
+    //     else{
+    //         console.log("passwords dont match")
+    //     }
+        
+    // }
+
     return (
-        <main style={{ textAlign: "center" }}>
+        <main style={{ textAlign: "center" }}><head>
+            <link rel="stylesheet" href="https://unpkg.com/@blaze/css@x.x.x/dist/blaze/blaze.css"></link>
+            </head>
             <form className="form--login" onSubmit={handleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">Register for I.C.I.R.A to begin building reports</h1>
                 <fieldset>
@@ -75,6 +92,7 @@ export const Register = (props) => {
                     <input onChange={updateUser}
                     type={"password"} id="cred" className="form-control"
                     placeholder="password" required/>
+
                 </fieldset>
                 <fieldset>
                     <input onChange={(evt) => {
@@ -83,7 +101,7 @@ export const Register = (props) => {
                         setUser(copy)
                     }}
                         type="checkbox" id="isAdmin" />
-                    <label htmlFor="email"> I am an Admin </label>
+                    <label htmlFor="isAdmin"> Request to be an Admin </label>
                 </fieldset>
                 <fieldset>
                     <button type="submit"> Register </button>

@@ -7,12 +7,15 @@ import { Route, Routes } from "react-router-dom"
 import { Authorized } from "./views/authorized"
 import { AppView } from "./views/appview"
 import { NavBar } from "./Nav/navbar"
+import { RecoverPassword } from "./auth/forgottenLogin"
     
 
 export const IciraView=()=>{
         return <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgotPassword" element={<RecoverPassword/>}/>
+
     
             <Route path="*" element={
                 <Authorized>

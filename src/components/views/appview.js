@@ -1,6 +1,8 @@
-import { Navigate, useLocation, useNavigate} from "react-router-dom"
+import {useLocation, useNavigate, Link} from "react-router-dom"
 import { Authorized } from "./authorized"
 import {useEffect,useState} from "react"
+import '@blaze/atoms'
+
 
 const iciraUser = localStorage.getItem("IciraUser")
 const currentUser =JSON.parse(iciraUser)
@@ -9,39 +11,45 @@ const api= "http://localhost:8088"
 
 export const AppView =()=>{
 
-    const [users, setUsers] = useState([])
-    const navigate= useNavigate()
-    
+    const [user, setUser] = useState([])
+    const navigate = useNavigate()
+    //navigate("/login")
     useEffect(()=>{
-        fetch(`${api}/IciraUsers`)
+        fetch(`${api}/IciraUsers/${currentUser.id}`)
         .then(response =>response.json())
         .then((data) => {
-            setUsers(data)
+            setUser(data)
         })
     },[]
     )
 
-    useEffect(
-        ()=>{
+    // useEffect(
+    //     ()=>{
             
 
-        },
-        [users]
-    )
-
+    //     },
+    //     [users]
+    // )
+    function nav(){
+        navigate("/login");
+    }
 
     return <>
-    <h1>Welcome {
-            users.map(
-            (user)=>{
-                if(user.id === currentUser.id){
-                    return user.fullName
-                }
-            }
-            )
+    <h1>Welcome {user.fullName
+            
     
     }</h1>
+    {
+                /*localStorage.getItem("IciraUser")
+                    ? <li className="navbar__item navbar__logout">
+                        <Link className="navbar__link" to="" onClick={() => {
+                            localStorage.removeItem("IciraUser")
+                            navigate("/", {replace: true})
+                        }}>Logout</Link>
+                    </li>
+                    : ""*/
+            }
             
-    <button onClick={navigate("/login")}>log Out</button>
+    <button onClick={() => {nav()}}>log Out</button>
     </>
 }
