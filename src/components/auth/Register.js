@@ -70,9 +70,7 @@ export const Register = (props) => {
     // }
 
     return (
-        <main style={{ textAlign: "center" }}><head>
-            <link rel="stylesheet" href="https://unpkg.com/@blaze/css@x.x.x/dist/blaze/blaze.css"></link>
-            </head>
+        <main style={{ textAlign: "center" }}>
             <form className="form--login" onSubmit={handleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">Register for I.C.I.R.A to begin building reports</h1>
                 <fieldset>

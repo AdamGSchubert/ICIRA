@@ -38,8 +38,8 @@ export const Login = () => {
 
     return (
         
-        <main className="container--login">
-            <head><link rel="stylesheet" href="https://unpkg.com/@blaze/css@x.x.x/dist/blaze/blaze.css"></link></head>
+        <main className="login--container">
+            
             <section>
                 <form className="o-container o-container--xsmall c-card u-high" onSubmit={handleLogin}>
                     <h1>I.C.I.R.A.</h1>
@@ -49,7 +49,7 @@ export const Login = () => {
                         <input type="email"
                             value={email}
                             onChange={evt => set(evt.target.value)}
-                            className="form-control c-field c-field--label"
+                            className=" c-field c-field--label"
                             placeholder="Email address"
                             required autoFocus />
                     </fieldset>
@@ -58,12 +58,12 @@ export const Login = () => {
                         <input type="password"
                             value={password}
                             onChange={evt=>setPass(evt.target.value)}
-                            className="form-control c-field c-field--label"
+                            className=" c-field c-field--label"
                             placeholder="password"
                             required autoFocus></input>
                     </fieldset>
                     <fieldset>
-                        <button type="submit" className="c-button c-button--block c-button--brand">
+                        <button type="submit" className="c-button c-button--brand">
                             Sign in
                         </button>
                         <div className="forgotBox"><Link className="forgot_password" to="/forgotPassword">Forgot password?</Link></div>

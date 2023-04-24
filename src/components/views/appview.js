@@ -1,6 +1,7 @@
-import {useLocation, useNavigate, Link} from "react-router-dom"
+import {useLocation, useNavigate, Link, Route, Routes} from "react-router-dom"
 import { Authorized } from "./authorized"
 import {useEffect,useState} from "react"
+import { UserProfile } from "../userpages/profile"
 import '@blaze/atoms'
 
 
@@ -22,34 +23,13 @@ export const AppView =()=>{
         })
     },[]
     )
-
-    // useEffect(
-    //     ()=>{
-            
-
-    //     },
-    //     [users]
-    // )
-    function nav(){
-        navigate("/login");
-    }
-
-    return <>
-    <h1>Welcome {user.fullName
-            
     
-    }</h1>
-    {
-                /*localStorage.getItem("IciraUser")
-                    ? <li className="navbar__item navbar__logout">
-                        <Link className="navbar__link" to="" onClick={() => {
-                            localStorage.removeItem("IciraUser")
-                            navigate("/", {replace: true})
-                        }}>Logout</Link>
-                    </li>
-                    : ""*/
-            }
-            
-    <button onClick={() => {nav()}}>log Out</button>
+    
+    return <>
+    
+    
+    <Routes>
+        {/* <Route path="/myprofile" element={<UserProfile/>}/> */}
+    </Routes>
     </>
 }
