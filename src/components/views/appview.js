@@ -1,8 +1,9 @@
-import {useLocation, useNavigate, Link, Route, Routes} from "react-router-dom"
+import {useLocation, useNavigate, Link, Route, Routes, Outlet} from "react-router-dom"
 import { Authorized } from "./authorized"
 import {useEffect,useState} from "react"
 import { UserProfile } from "../userpages/profile"
 import '@blaze/atoms'
+import { ReportGenerator } from "../Reports/reportbuilder"
 
 
 const iciraUser = localStorage.getItem("IciraUser")
@@ -25,11 +26,18 @@ export const AppView =()=>{
     )
     
     
-    return <>
-    
-    
+    return (
     <Routes>
-        {/* <Route path="/myprofile" element={<UserProfile/>}/> */}
-    </Routes>
-    </>
+        <Route path="home" element={<>
+
+        <h1>this is the homepage on the appview</h1>
+            <Outlet/>
+        </>
+    }>
+
+    </Route>
+    
+        <Route path="/myprofile" element={<UserProfile/>}/>
+        <Route path="/builder" element={<ReportGenerator/>}/>
+    </Routes>)
 }

@@ -1,65 +1,98 @@
 import { useEffect,useState } from "react";
+import SecretKeys from "../../.Secrets/SecretKeys";
 
-
+const beaKey =SecretKeys.bea
 const jsonApi = "http://localhost:8088"
+const beaAPI = "https://apps.bea.gov/api/data?"
 
 export const ReportGenerator =()=>{
+
+
+    const [frequency, setFrequency]=useState({})
+    const [reportYear, setReportYr]=useState({})
+    const [industryCodes,setIndusties]=useState([])
+    const [searchIndustry, setSearchIndustry]=useState({})
+
+
     
+    
+    useEffect(// grabs all industries
+        ()=>{
+            fetch(`${jsonApi}/naicsTable`)
+            .then(response =>response.json())
+            .then((data) => {
+                setIndusties(data)
+            })
+        },
+        []
+    )
+    
+    const searchTool =(searchTerm)=>{
 
+        if (searchTerm.toLowerCase() == industryCodes.naicsTitle.toLowerCase()){
+            console.log(industryCodes.naicsCode)
 
+        }
 
+    }
+    
+    
+    // fetch(`${beaAPI}UserID=${beaKey}&method=GetData&DataSetName=GDPbyIndustry&frequency=${frequency} `)
+    // .then(response =>response.json())
+    // .then((data) => {})
+    
+    useEffect(
+        ()=>{
+            let currentYear = ( new Date()).getFullYear()
+            const beginningYear = 1997
 
-
+        for (let i = currentYear; i >= beginningYear; i--){
+            var option =document.createElement("OPTION")
+            option.innerHTML = i
+            option.value= i
+            let ddlYears=document.getElementById("reportYear")
+            const selectYear =(<option value="select a year" placeholder="select a year"></option>)
+            // ddlYears.appendChild(selectYear)
+            ddlYears.appendChild(option)
+    }
+    },
+    []
+    ) 
 
     return<>
         <ul>
-            <li>industry selector</li>
             <li>
-                <label htmlFor="year">select a report year</label>
-                <div className="dropdown">
-                    <div id="mydropdown" className="dropdown-content">
-                        <input type="text" placeholder="type a year" id="myInput" onKeyUp={filterFunction()}/>
+            <input type="text" placeholder="search for industry" name="" onChange={(search)=>{searchTool(search.target.value)}}/>
+            <select id="industrySelector" onChange={(event)=>setSearchIndustry(event.target.value)}>
+                
+                <option value="">select your industry</option> 
+                
+                    {
+                        industryCodes.map(industry => {
+                            return <><option id={industry.id} value={industry.naicsCode}> {industry.naicsTitle}</option></>
+                        }
+                        )
+                    }
+                </select>
 
 
-                    </div>
+            </li>
+            <li>
+                <label htmlFor="reportYear">select a report year</label>
+                <select id="reportYear" onChange={ (e)=> setReportYr(e.target.value)}>
+                      
+                    </select>
 
 
 
 
-                </div>
-                    <option value={}></option>
-                    <option value="1997">1997</option>
-                    <option value="1998">1998</option>
-                    <option value="1999">1999</option>
-                    <option value="2000">2000</option>
-                    <option value="2001">2001</option>
-                    <option value="2002">2002</option>
-                    <option value="2003">2003</option>
-                    <option value="2004">2004</option>
-                    <option value="2005">2005</option>
-                    <option value="2006">2006</option>
-                    <option value="2007">2007</option>
-                    <option value="2008">2008</option>
-                    <option value="2009">2009</option>
-                    <option value="2010">2010</option>
-                    <option value="2011">2011</option>
-                    <option value="2012">2012</option>
-                    <option value="2013">2013</option>
-                    <option value="2014">2014</option>
-                    <option value="2015">2015</option>
-                    <option value="2016">2016</option>
-                    <option value="2017">2017</option>
-                    <option value="2018">2018</option>
-                    <option value="2019">2019</option>
-                    <option value="2020">2020</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>                
-                </select>          
+               
+                             
                 </li>
             <li>
                 <label htmlFor="reportFrequency">select frequency for the report</label>
-                <input type="radio" className="reportFrequency" value="a">Annual</input>
-                <input type="radio" className="reportFrequency" value="q">Quarterly</input>
+                <input type="radio" className="reportFrequency" value="a" onChange={(rep)=>setFrequency(rep.target.value)}/>Annual
+                <input type="radio" className="reportFrequency" value="q" onChange={(rep)=>setFrequency(rep.target.value)}/>Quarterly
             </li>
             <li>industry selector</li>
 

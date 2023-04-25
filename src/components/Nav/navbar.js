@@ -25,7 +25,7 @@ export const NavBar=()=>{
         <ul className="c-list c-list--inline c-list--unstyled navbar">
             
             <li className="c-list__item">
-                <Link className="Profile" to="/myprofile"> Report Builder</Link>
+                <Link className="builder" to="/builder"> Report Builder</Link>
             </li><li className="c-list__item">
                 <Link className="Profile" to="/myprofile"> My Reports</Link>
             </li>
