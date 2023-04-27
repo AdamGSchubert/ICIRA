@@ -27,8 +27,8 @@ export const Register = (props) => {
                         id: createdUser.id,
                         admin: createdUser.isAdmin
                     }))
-
-                    navigate("/")
+                    navigate("/login")
+                    
                 }
             })
     }
@@ -71,23 +71,34 @@ export const Register = (props) => {
 
     return (
         <main style={{ textAlign: "center" }}>
-            <form className="form--login" onSubmit={handleRegister}>
-                <h1 className="h3 mb-3 font-weight-normal">Register for I.C.I.R.A to begin building reports</h1>
+            <form className="form--login" onSubmit={(e)=>{handleRegister(e)}} >                <h1 className="h3 mb-3 font-weight-normal">Register for I.C.I.R.A to begin building reports</h1>
                 <fieldset>
                     <label htmlFor="fullName"> Full Name </label>
-                    <input onChange={updateUser}
-                           type="text" id="fullName" className="form-control"
-                           placeholder="Enter your name" required autoFocus />
+                    <input 
+                    onChange={updateUser}
+                    value={user.fullName}      
+                    type="text" 
+                    id="fullName" 
+                    className="form-control"
+                    placeholder="Enter your name" 
+                    required 
+                    autoFocus />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="email"> Email address </label>
-                    <input onChange={updateUser}
-                        type="email" id="email" className="form-control"
-                        placeholder="Email address" required />
+                    <input 
+                    onChange={updateUser}
+                    value={user.email}
+                    type="email" 
+                    id="email" 
+                    className="form-control"
+                    placeholder="Email address" 
+                    required />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="password">Create a Password</label>
                     <input onChange={updateUser}
+                    value={user.cred}
                     type={"password"} id="cred" className="form-control"
                     placeholder="password" required/>
 
@@ -98,7 +109,9 @@ export const Register = (props) => {
                         copy.isAdmin = evt.target.checked
                         setUser(copy)
                     }}
-                        type="checkbox" id="isAdmin" />
+                        type="checkbox" 
+                        id="isAdmin" 
+                        value={user.isAdmin}/>
                     <label htmlFor="isAdmin"> Request to be an Admin </label>
                 </fieldset>
                 <fieldset>
