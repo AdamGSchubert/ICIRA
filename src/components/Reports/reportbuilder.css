@@ -1,0 +1,21 @@
+/* .industryAutoComplete{
+   margin-bottom: 10rem;
+}
+
+.queryBuilder{
+    display: flex;
+    justify-items: center;
+}
+
+.testing{
+    margin-top: 3rem;
+} */
+.example{
+    display:flex;
+    flex-direction: column;
+}
+.reportPreview{
+    background-color: aqua;
+    width: 400rem;
+    height: 400rem;
+}
