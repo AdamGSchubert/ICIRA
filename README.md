@@ -24,5 +24,3 @@ This functionality is done by utilizing the react framework, BlazeUI, and JSON a
  future functionality
   - export saved reports as a PDF
   - OAuth authentication for social accounts (ie: google accounts)
-
-
