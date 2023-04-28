@@ -5,6 +5,7 @@ import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import SecretKeys from "../../Secrets/SecretKeys";
 import { blue, green } from "@mui/material/colors";
 import { ErrorReport, reportError } from "../ErrorHandle/errorHandles";
+import { PreviewReport } from "./previewReport";
 
 const beaKey =SecretKeys.bea
 const jsonApi = "http://localhost:8088"
@@ -134,16 +135,24 @@ const beaApi =()=>{
                     </li>
                 <li onChange={(rep)=>setFrequency(rep.target.value)}>
                     <label htmlFor="reportFrequency">select frequency for the report</label>
-                    <input type="radio" 
+                    <ul>
+                    <li><input type="radio" 
                     name="reportFrequency" 
                     value="a" 
                     //checked={frequency==="a"}
-                    />Annual
-                    <input type="radio" 
+                    />Annual</li>
+                    <li><input type="radio" 
                     name="reportFrequency" 
                     value="q"
                     //checked={frequency === "q"}
-                    />Quarterly
+                    />Quarterly (data began publication in 2005)
+                    </li>
+                    <li><input type="radio" 
+                    name="reportFrequency" 
+                    value="a,q"
+                    //checked={frequency === "q"}
+                    />Annual and Quarterly (returns Annual if no Quarterly)</li>
+                    </ul>
                 </li>
                 <li>
                     <label htmlFor="reportName" >Enter Desired Report Title</label>
@@ -158,6 +167,8 @@ const beaApi =()=>{
             </ul>
         </div>   
         <ErrorReport dataCheck={reportData}/>
+    
+        <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} industryDescipt={searchIndustry?.naicsTitle} />
         
     </div>
     </>
