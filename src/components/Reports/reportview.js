@@ -25,6 +25,14 @@ export const ReportView =()=>{
             setReport(data)
         })
     },[])
+    useEffect(()=>{
+        fetch(`${api}/naicsTable?id=${report?.[0]?.naicsTableId}`)
+        .then(response =>response.json())
+        .then((data) => {
+            setNaicsObj(data)
+        })
+    },
+    [report])
 
     useEffect(()=>{
         fetch(`${beaAPI}UserID=${beaKey}&method=GetData&DataSetName=GDPbyIndustry&frequency=${report?.[0]?.reportFreq}&Industry=${naicsObj?.[0]?.naicsCode}&TableID=6&Year=${report?.[0]?.reportYear}`)
@@ -35,14 +43,8 @@ export const ReportView =()=>{
 
     },
     [naicsObj])
-    useEffect(()=>{
-        fetch(`${api}/naicsTable?id=${report?.[0]?.naicsTableId}`)
-        .then(response =>response.json())
-        .then((data) => {
-            setNaicsObj(data)
-        })
-    },
-    [report])
+
+    
 
     // const getNaicsCode =()=>{
     //     report.

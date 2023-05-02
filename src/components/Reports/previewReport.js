@@ -11,7 +11,7 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
     const iciraUser = localStorage.getItem("IciraUser")
     const currentUser =JSON.parse(iciraUser)
     const api ="http://localhost:8088"
-const navigate =useNavigate()
+    const navigate =useNavigate()
 
 
 
@@ -118,6 +118,16 @@ const navigate =useNavigate()
                                        )
             
          }
+         const deleteReport =(reportId)=>{
+            fetch(`${api}/reports/${reportId}`,{
+                method: "DELETE",
+                    })
+                .then(res=>res.json())
+                .then(()=>{
+                   navigate("/myreports")
+                }
+                )
+            }
         
 
     return<><Grid>
@@ -143,7 +153,10 @@ const navigate =useNavigate()
     
     {   
         reportID 
-        ? <button>view only </button>
+        ? <><button onClick={()=>{deleteReport(reportID)}} >delete </button>
+        <button onClick={()=>{}} >edit </button>
+        <button onClick={()=>{}} >export to PDF </button>
+        </>
 
         :  <button onClick={(event)=>{saveReport(event)}}>Save Report</button>
 
