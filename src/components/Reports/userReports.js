@@ -35,7 +35,7 @@ const navigate =useNavigate()
     
     },[userReports])
 
-
+    
 
     const reportDisplay =(report)=>{
          
@@ -43,16 +43,28 @@ const navigate =useNavigate()
          return xyz?.naicsTitle ? xyz.naicsTitle : ""
         }
     
-    // {let repo = naicsObj.find(item => item.id=== report?.naicsTableId)} let reportCode = naicsObj.find(item=>item.id=== report?.naicsTableId)
+     const updateReports =()=>{
+        return fetch(`${api}/reports?userId=${currentUser.id}`)
+        .then(response =>response.json())
+        .then((data) => {
+            setUserReports(data)
+    })
+    }
 
-    // reportCode ? reportCode.naicsTitle : "" 
-   
-    // const functionName =(report)=>{
-    //     navigate(`/myreports/${report.id}`)
-    // }
 
-    return <>
-    <h1>user reports</h1>
+     const deleteReport =(reportId)=>{
+        fetch(`${api}/reports/${reportId}`,{
+            method: "DELETE",
+                })
+            .then(res=>res.json())
+            .then(()=>{
+               updateReports()
+            }
+            )
+        }
+    
+
+    return <><h1>user reports</h1>
         <section>
             <div className="reportCards">
                 {
@@ -63,7 +75,7 @@ const navigate =useNavigate()
                        
                        <button onClick={()=>{navigate(`/myreports/${report.id}`)}}>view</button>
                        <button>edit</button>
-                       <button>delete</button>
+                       <button onClick={()=>{deleteReport(report.id)}}>delete</button>
                        </div>
                        }
                         )
