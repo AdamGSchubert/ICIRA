@@ -6,25 +6,28 @@ import SecretKeys from "../../Secrets/SecretKeys";
 import { blue, green } from "@mui/material/colors";
 import { ErrorReport, reportError } from "../ErrorHandle/errorHandles";
 import { PreviewReport } from "./previewReport";
+import { Box, Grid } from "@mui/material";
 
-const beaKey =SecretKeys.bea
-const jsonApi = "http://localhost:8088"
-const beaAPI = "https://apps.bea.gov/api/data?"
+
 
 export const ReportGenerator =()=>{
 
-    const currentYear = ( new Date()).getFullYear()
-    const [frequency, setFrequency]=useState("a")
+   const beaKey =SecretKeys.bea
+const jsonApi = "http://localhost:8088"
+const beaAPI = "https://apps.bea.gov/api/data?" 
+const currentYear = ( new Date()).getFullYear()
+    const [frequency, setFrequency]=useState("a,q")
     const [aFrequencyChecked, setAFrequencyChecked]=useState(false)
         
     const [reportYear, setReportYr]=useState(currentYear)
     const [industryCodes,setIndusties]=useState([])
     const [searchIndustry, setSearchIndustry]=useState(null)
     
-    const [reportTitle, setReportTitle]=useState(null)
+    const [reportTitle, setReportTitle]=useState("")
      const [buttonclick, setButton]=useState(false)
     const [reportData, setReportData]= useState({})
     const [hasError, setError]= useState(false)
+    
 
 const beaApi =()=>{
         return fetch(`${beaAPI}UserID=${beaKey}&method=GetData&DataSetName=GDPbyIndustry&frequency=${frequency}&Industry=${searchIndustry?.naicsCode}&TableID=6&Year=${reportYear} `)
@@ -80,7 +83,7 @@ const beaApi =()=>{
         setReportData(clearobj)
         setButton(false)
         setReportTitle("")
-        setFrequency("a")
+        setFrequency("a,q")
         setReportYr(currentYear)
         // setAFrequencyChecked(false)
         
@@ -112,8 +115,9 @@ const beaApi =()=>{
 
    
     //console.log(searchIndustry)
-    return<><div className="example">
-        <div className="QuerySelect">
+    return<Box sx={{flexGrow:1}}>
+    
+        <Grid columns={2} className="QuerySelect">
             <ul className="queryBuilder"> 
                 <li className="industryAutoComplete">
                     <Autocomplete
@@ -133,24 +137,24 @@ const beaApi =()=>{
                     <select id="reportYear" placeholder={currentYear} value={reportYear} onChange={ (e)=> {setReportYr(e.nativeEvent.target.selectedOptions[0].innerText)}}>
                         </select>       
                     </li>
-                <li onChange={(rep)=>setFrequency(rep.target.value)}>
+                <li >
                     <label htmlFor="reportFrequency">select frequency for the report</label>
-                    <ul>
+                    <ul onChange={(rep)=>setFrequency(rep.target.value)}>
                     <li><input type="radio" 
                     name="reportFrequency" 
                     value="a" 
-                    //checked={frequency==="a"}
+                    checked={frequency==="a"}
                     />Annual</li>
                     <li><input type="radio" 
                     name="reportFrequency" 
                     value="q"
-                    //checked={frequency === "q"}
+                    checked={frequency === "q"}
                     />Quarterly (data began publication in 2005)
                     </li>
                     <li><input type="radio" 
                     name="reportFrequency" 
                     value="a,q"
-                    //checked={frequency === "q"}
+                    checked={frequency === "a,q"}
                     />Annual and Quarterly (returns Annual if no Quarterly)</li>
                     </ul>
                 </li>
@@ -165,11 +169,14 @@ const beaApi =()=>{
                     <button onClick={()=>{clearAndReset()}}>New Report</button>
                 </li>
             </ul>
-        </div>   
-        <ErrorReport dataCheck={reportData}/>
-    
-        <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} industryDescipt={searchIndustry?.naicsTitle} />
+            <ErrorReport dataCheck={reportData}/>
+        </Grid>   
         
-    </div>
-    </>
+        <Grid container>
+        <h1>Report Preview </h1>
+        <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} industryDescript={searchIndustry} frequency={frequency} />
+        </Grid>
+    
+    </Box>
+    
 }

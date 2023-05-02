@@ -4,6 +4,8 @@ import {useEffect,useState} from "react"
 import { UserProfile } from "../userpages/profile"
 import '@blaze/atoms'
 import { ReportGenerator } from "../Reports/reportbuilder"
+import { UserReportList } from "../Reports/userReports"
+import { ReportView } from "../Reports/reportview"
 
 
 const iciraUser = localStorage.getItem("IciraUser")
@@ -39,5 +41,8 @@ export const AppView =()=>{
     
         <Route path="/myprofile" element={<UserProfile/>}/>
         <Route path="/builder" element={<ReportGenerator/>}/>
+        <Route path="/myreports" element={<UserReportList/>}/>
+        <Route path="myreports/:reportId" element={<ReportView/>}/>
+
     </Routes>)
 }
