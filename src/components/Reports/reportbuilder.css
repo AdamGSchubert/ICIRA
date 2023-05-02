@@ -10,12 +10,15 @@
 .testing{
     margin-top: 3rem;
 } */
-.example{
+.reportPage{
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 .reportPreview{
     background-color: aqua;
     width: 400rem;
     height: 400rem;
+}
+.QuerySelect{
+    background-color: aqua;
 }
