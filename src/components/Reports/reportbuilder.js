@@ -10,17 +10,22 @@ import { Box, Grid } from "@mui/material";
 
 
 
-export const ReportGenerator =()=>{
+export const ReportGenerator =({reportIdentify, editData})=>{
+
+    
 
    const beaKey =SecretKeys.bea
-const jsonApi = "http://localhost:8088"
-const beaAPI = "https://apps.bea.gov/api/data?" 
-const currentYear = ( new Date()).getFullYear()
-    const [frequency, setFrequency]=useState("a,q")
-    const [aFrequencyChecked, setAFrequencyChecked]=useState(false)
+    const jsonApi = "http://localhost:8088"
+    const beaAPI = "https://apps.bea.gov/api/data?" 
+    const currentYear = ( new Date()).getFullYear()
+    const [frequency, setFrequency]=useState( "a,q")
+    
         
     const [reportYear, setReportYr]=useState(currentYear)
     const [industryCodes,setIndusties]=useState([])
+
+    
+
     const [searchIndustry, setSearchIndustry]=useState(null)
     
     const [reportTitle, setReportTitle]=useState("")
@@ -97,20 +102,28 @@ const beaApi =()=>{
         setButton(true)
         beaApi()
 
-        // reportError(reportData)
+        
     }
-    // const getFrequency=()=>{
-    //     if(aFrequencyChecked.value){
-    //         setFrequency(aFrequencyChecked.value)
-    //     }
-    //     else{
-    //         setFrequency(qFrequencyChecked.value)
-    //     }
-    // }
+    
 
+/// edit function area 
+useEffect(()=>{
+    setSearchIndustry(industryCodes.find(naicsObj => naicsObj.id === editData?.[0]?.naicsTableId))
 
+},[industryCodes, editData])
 
+const reportPull =()=>{
+    setButton(true)
+    beaApi()
 
+}
+useEffect(()=>{
+    setFrequency(editData?.[0]?.reportFreq)
+    setReportYr(editData?.[0]?.reportYear)
+    setReportTitle(editData?.[0]?.reportTitle)
+    //reportPull()
+
+},[editData])
 
 
    
@@ -134,7 +147,7 @@ const beaApi =()=>{
 
                 <li className="testing">
                     <label htmlFor="reportYear">select a report year</label>
-                    <select id="reportYear" placeholder={currentYear} value={reportYear} onChange={ (e)=> {setReportYr(e.nativeEvent.target.selectedOptions[0].innerText)}}>
+                    <select id="reportYear" placeholder={ currentYear } value={reportYear} onChange={ (e)=> {setReportYr(e.nativeEvent.target.selectedOptions[0].innerText)}}>
                         </select>       
                     </li>
                 <li >
@@ -164,9 +177,17 @@ const beaApi =()=>{
                     <input type="text" id="reportName" required value={reportTitle} onChange={(text)=>{setReportTitle(text.target.value)}}/>
                     
                 </li>
-                <li>
+                <li>{
+                    editData 
+                    ? ""//reportPull()
+            
+
+                    :<><button onClick={(e)=>{errorHandle(e)}}>Generate Report</button>
+                        <button onClick={()=>{clearAndReset()}}>New Report</button></>
+                    
+                    }
                     <button onClick={(e)=>{errorHandle(e)}}>Generate Report</button>
-                    <button onClick={()=>{clearAndReset()}}>New Report</button>
+                        <button onClick={()=>{clearAndReset()}}>New Report</button>
                 </li>
             </ul>
             <ErrorReport dataCheck={reportData}/>
@@ -174,7 +195,7 @@ const beaApi =()=>{
         
         <Grid container>
         <h1>Report Preview </h1>
-        <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} industryDescript={searchIndustry} frequency={frequency} />
+        <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} industryDescript={searchIndustry} frequency={frequency} reportIdentity={reportIdentify}/>
         </Grid>
     
     </Box>

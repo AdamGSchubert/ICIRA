@@ -5,7 +5,7 @@ import {Pie} from "react-chartjs-2"
 import { Route, useNavigate } from "react-router-dom"
 
 
-export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDescript, frequency, reportID})=>{
+export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDescript, frequency, reportID, reportIdentity})=>{
 
 
     const iciraUser = localStorage.getItem("IciraUser")
@@ -128,7 +128,39 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
                 }
                 )
             }
-        
+            
+
+            const editSelected =(reportId)=>{
+                navigate(`/editreport/${reportId}`)
+            }
+
+
+            const updateReport =(reportId)=>{ 
+                const updateDetails={
+                    userId: currentUser.id,
+                    reportTitle:userTitle,
+                    naicsTableId:industryDescript.id,
+                    reportYear:selectedYear,
+                    reportFreq:frequency,
+            }
+                
+                
+
+
+                fetch(`${api}/reports/${reportId}`,{
+                    method: "PUT",
+                    headers: {
+                    "Content-Type":"application/json"
+                     },
+                      body: JSON.stringify(updateDetails)
+                        })
+                           .then(res=>res.json())
+                                   .then(()=>{}
+                                           )
+                }
+            
+
+            
 
     return<><Grid>
     
@@ -154,15 +186,15 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
     {   
         reportID 
         ? <><button onClick={()=>{deleteReport(reportID)}} >delete </button>
-        <button onClick={()=>{}} >edit </button>
+        <button onClick={()=>{editSelected(reportID)}} >edit </button>
         <button onClick={()=>{}} >export to PDF </button>
         </>
+        : reportIdentity ? <button onClick={()=>{updateReport(reportIdentity)}} >Update Report </button>
 
         :  <button onClick={(event)=>{saveReport(event)}}>Save Report</button>
-
         
-
     }
+    
 
     
     </Grid>

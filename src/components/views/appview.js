@@ -6,6 +6,7 @@ import '@blaze/atoms'
 import { ReportGenerator } from "../Reports/reportbuilder"
 import { UserReportList } from "../Reports/userReports"
 import { ReportView } from "../Reports/reportview"
+import { EditReport} from "../Reports/editReport"
 
 
 const iciraUser = localStorage.getItem("IciraUser")
@@ -43,6 +44,7 @@ export const AppView =()=>{
         <Route path="/builder" element={<ReportGenerator/>}/>
         <Route path="/myreports" element={<UserReportList/>}/>
         <Route path="myreports/:reportId" element={<ReportView/>}/>
+        <Route path="editreport/:reportId" element={<EditReport/>}/>
 
     </Routes>)
 }
