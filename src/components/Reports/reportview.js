@@ -14,8 +14,9 @@ export const ReportView =()=>{
     const navigate = useNavigate()
 
     const [report, setReport] = useState({})
-    const [reportData, setReportData]=useState()
     const [naicsObj, setNaicsObj]=useState({})
+    const [reportData, setReportData]=useState()
+    
 
 
     useEffect(()=>{
@@ -26,20 +27,23 @@ export const ReportView =()=>{
         })
     },[])
     useEffect(()=>{
-        fetch(`${api}/naicsTable?id=${report?.[0]?.naicsTableId}`)
+        if(report[0]?.naicsTableId){
+         fetch(`${api}/naicsTable?id=${report[0]?.naicsTableId}`)
         .then(response =>response.json())
         .then((data) => {
             setNaicsObj(data)
-        })
+        })}
     },
     [report])
 
     useEffect(()=>{
-        fetch(`${beaAPI}UserID=${beaKey}&method=GetData&DataSetName=GDPbyIndustry&frequency=${report?.[0]?.reportFreq}&Industry=${naicsObj?.[0]?.naicsCode}&TableID=6&Year=${report?.[0]?.reportYear}`)
+        if(naicsObj?.[0]?.naicsCode){
+            fetch(`${beaAPI}UserID=${beaKey}&method=GetData&DataSetName=GDPbyIndustry&frequency=${report?.[0]?.reportFreq}&Industry=${naicsObj?.[0]?.naicsCode}&TableID=6&Year=${report?.[0]?.reportYear}`)
         .then(response =>response.json())
         .then((data) => {
             setReportData(data)
         })
+    }
 
     },
     [naicsObj])

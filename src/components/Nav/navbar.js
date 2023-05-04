@@ -2,6 +2,7 @@ import { Link, useNavigate} from "react-router-dom"
 import { useState,useEffect } from "react"
 
 
+
 export const NavBar=()=>{
     const iciraUser = localStorage.getItem("IciraUser")
 const currentUser =JSON.parse(iciraUser)

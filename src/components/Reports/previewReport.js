@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
-import { Grid } from "@mui/material"
+import { Grid, tooltipClasses } from "@mui/material"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend} from "chart.js"
 import {Pie} from "react-chartjs-2"
 import { Route, useNavigate } from "react-router-dom"
 
 
-export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDescript, frequency, reportID})=>{
+export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDescript, frequency, reportID, reportIdentity})=>{
 
 
     const iciraUser = localStorage.getItem("IciraUser")
@@ -128,7 +128,47 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
                 }
                 )
             }
-        
+            
+
+            const editSelected =(reportId)=>{
+                navigate(`/editreport/${reportId}`)
+            }
+
+
+            const updateReport =(reportId)=>{ 
+                const updateDetails={
+                    userId: currentUser.id,
+                    reportTitle:userTitle,
+                    naicsTableId:industryDescript.id,
+                    reportYear:selectedYear,
+                    reportFreq:frequency,
+            }
+                
+                
+
+
+                fetch(`${api}/reports/${reportId}`,{
+                    method: "PUT",
+                    headers: {
+                    "Content-Type":"application/json"
+                     },
+                      body: JSON.stringify(updateDetails)
+                        })
+                           .then(res=>res.json())
+                                   .then(()=>{
+                                    navigate("/myreports")
+                                   }
+                                           )
+                }
+     // chart data
+     ChartJS.register(ArcElement,Tooltip,Legend)
+    const functionName =()=>{
+        const labels=["total","Gross Surplus (Profit)", "Compensation","Tax" ]
+        const data= [ usDollar.format(industryTotal?.[0]?.DataValue),usDollar.format(grossOp?.[0]?.DataValue) ]
+
+    }
+
+           
 
     return<><Grid>
     
@@ -148,24 +188,22 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
     </ul>
     <p>{noteObj?.NoteText}</p>
     </div>
-    <div className="chart"></div>
+    <div className="chart">
+        {}
+    </div>
     
     
     {   
         reportID 
         ? <><button onClick={()=>{deleteReport(reportID)}} >delete </button>
-        <button onClick={()=>{}} >edit </button>
+        <button onClick={()=>{editSelected(reportID)}} >edit </button>
         <button onClick={()=>{}} >export to PDF </button>
         </>
+        : reportIdentity ? <button onClick={()=>{updateReport(reportIdentity)}} >Update Report </button>
 
         :  <button onClick={(event)=>{saveReport(event)}}>Save Report</button>
-
         
-
     }
-
-    
     </Grid>
     </>
-
 }

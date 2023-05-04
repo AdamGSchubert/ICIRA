@@ -10,17 +10,22 @@ import { Box, Grid } from "@mui/material";
 
 
 
-export const ReportGenerator =()=>{
+export const ReportGenerator =({reportIdentify, editData})=>{
+
+    
 
    const beaKey =SecretKeys.bea
-const jsonApi = "http://localhost:8088"
-const beaAPI = "https://apps.bea.gov/api/data?" 
-const currentYear = ( new Date()).getFullYear()
+    const jsonApi = "http://localhost:8088"
+    const beaAPI = "https://apps.bea.gov/api/data?" 
+    const currentYear = ( new Date()).getFullYear()
     const [frequency, setFrequency]=useState("a,q")
-    const [aFrequencyChecked, setAFrequencyChecked]=useState(false)
+    
         
     const [reportYear, setReportYr]=useState(currentYear)
     const [industryCodes,setIndusties]=useState([])
+
+    
+
     const [searchIndustry, setSearchIndustry]=useState(null)
     
     const [reportTitle, setReportTitle]=useState("")
@@ -97,22 +102,37 @@ const beaApi =()=>{
         setButton(true)
         beaApi()
 
-        // reportError(reportData)
+        
     }
-    // const getFrequency=()=>{
-    //     if(aFrequencyChecked.value){
-    //         setFrequency(aFrequencyChecked.value)
-    //     }
-    //     else{
-    //         setFrequency(qFrequencyChecked.value)
-    //     }
-    // }
+    
 
+/// edit function area 
+useEffect(()=>{
+    if(editData){
+        setSearchIndustry(industryCodes.find(naicsObj => naicsObj.id === editData?.[0]?.naicsTableId))
+    }
+},[industryCodes, editData])
 
+const reportPull =()=>{
+    setButton(true)
+    beaApi()
 
+}
+useEffect(()=>{
+    if(editData){
+        setFrequency(editData?.[0]?.reportFreq)
+    setReportYr(editData?.[0]?.reportYear)
+    setReportTitle(editData?.[0].reportTitle)
+   } 
+   
+    
+},[editData])
 
-
-
+useEffect(()=>{
+    if(searchIndustry){
+        reportPull()
+    }
+},[searchIndustry])
    
     //console.log(searchIndustry)
     return<Box sx={{flexGrow:1}}>
@@ -125,48 +145,58 @@ const beaApi =()=>{
                     id="industryAuto"
                     options={industryCodes}
                     getOptionLabel={(option)=>option.naicsTitle}
-                    value={searchIndustry}
+                    // defaultValue={""}
+                     value={searchIndustry}
                     sx={{width:400, height:50}}
-                    isOptionEqualToValue={(option, value)=> option===value}
+                     //isOptionEqualToValue={(option, value)=> option===value}
                     renderInput={(params)=><TextField {...params} label="industries" variant="outlined"/>   } 
-                    onChange={(event, value)=>{setSearchIndustry(value)}}/>
+                    onChange={(event,value)=>{setSearchIndustry(value)}}/>
                 </li>
 
                 <li className="testing">
                     <label htmlFor="reportYear">select a report year</label>
-                    <select id="reportYear" placeholder={currentYear} value={reportYear} onChange={ (e)=> {setReportYr(e.nativeEvent.target.selectedOptions[0].innerText)}}>
+                    <select id="reportYear"  placeholder={currentYear} value={reportYear} onChange={ (e)=> {setReportYr(e.nativeEvent.target.selectedOptions[0].innerText)}}>
                         </select>       
                     </li>
                 <li >
                     <label htmlFor="reportFrequency">select frequency for the report</label>
-                    <ul onChange={(rep)=>setFrequency(rep.target.value)}>
+                    <ul>
                     <li><input type="radio" 
                     name="reportFrequency" 
                     value="a" 
                     checked={frequency==="a"}
-                    />Annual</li>
+                    onChange={(rep)=>setFrequency(rep.target.value)}/>Annual</li>
                     <li><input type="radio" 
                     name="reportFrequency" 
                     value="q"
                     checked={frequency === "q"}
-                    />Quarterly (data began publication in 2005)
+                    onChange={(rep)=>setFrequency(rep.target.value)}/>Quarterly (data began publication in 2005)
                     </li>
                     <li><input type="radio" 
                     name="reportFrequency" 
                     value="a,q"
-                    checked={frequency === "a,q"}
-                    />Annual and Quarterly (returns Annual if no Quarterly)</li>
+                    // checked={frequency === "a,q"}
+                    checked
+                    
+                    onChange={(rep)=>setFrequency(rep.target.value)}/>Annual and Quarterly (returns Annual if no Quarterly)</li>
                     </ul>
                 </li>
                 <li>
                     <label htmlFor="reportName" >Enter Desired Report Title</label>
                     
-                    <input type="text" id="reportName" required value={reportTitle} onChange={(text)=>{setReportTitle(text.target.value)}}/>
+                    <input type="text" id="reportName"  value={reportTitle} onChange={(text)=>{setReportTitle(text.target.value)}}/>
                     
                 </li>
-                <li>
-                    <button onClick={(e)=>{errorHandle(e)}}>Generate Report</button>
-                    <button onClick={()=>{clearAndReset()}}>New Report</button>
+                <li>{
+                    editData 
+                    ?""//reportPull()
+            
+
+                    :<><button onClick={(e)=>{errorHandle(e)}}>Generate Report</button>
+                        <button onClick={()=>{clearAndReset()}}>New Report</button></>
+                    
+                    }
+                    
                 </li>
             </ul>
             <ErrorReport dataCheck={reportData}/>
@@ -174,7 +204,7 @@ const beaApi =()=>{
         
         <Grid container>
         <h1>Report Preview </h1>
-        <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} industryDescript={searchIndustry} frequency={frequency} />
+        <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} industryDescript={searchIndustry} frequency={frequency} reportIdentity={reportIdentify}/>
         </Grid>
     
     </Box>

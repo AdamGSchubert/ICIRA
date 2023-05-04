@@ -62,7 +62,9 @@ const navigate =useNavigate()
             }
             )
         }
-    
+        const editSelected =(reportId)=>{
+            navigate(`/editreport/${reportId}`)
+        }
 
     return <><h1>user reports</h1>
         <section>
@@ -74,7 +76,7 @@ const navigate =useNavigate()
                             <h3>{report.reportYear} for the {reportDisplay(report)} Industry</h3>
                        
                        <button onClick={()=>{navigate(`/myreports/${report.id}`)}}>view</button>
-                       <button>edit</button>
+                       <button onClick={()=>{editSelected(report.id)}}>edit</button>
                        <button onClick={()=>{deleteReport(report.id)}}>delete</button>
                        </div>
                        }
