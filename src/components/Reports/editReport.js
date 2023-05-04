@@ -14,7 +14,7 @@ export const EditReport =()=>{
     const beaKey =SecretKeys.bea
     const navigate = useNavigate()
 
-    const [editReport, setEditReport]=useState({})
+    const [editReport, setEditReport]=useState(null)
 
     useEffect(()=>{
         fetch(`${api}/reports?id=${reportId}`)
@@ -23,11 +23,11 @@ export const EditReport =()=>{
             setEditReport(data)
         })
     },[reportId])
-
+//{editReport ? <ReportGenerator editData={editReport} reportIdentify={reportId}/> :""}
 return <>
     <h1>edit this report</h1>
-
-    <ReportGenerator editData={editReport} reportIdentify={reportId}/>
+   <ReportGenerator editData={editReport} reportIdentify={reportId}/> 
+    
 
 
 </>
