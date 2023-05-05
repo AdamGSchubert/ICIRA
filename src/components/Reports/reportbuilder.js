@@ -6,7 +6,8 @@ import SecretKeys from "../../Secrets/SecretKeys";
 import { blue, green } from "@mui/material/colors";
 import { ErrorReport, reportError } from "../ErrorHandle/errorHandles";
 import { PreviewReport } from "./previewReport";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid,Button } from "@mui/material";
+import SendIcon from '@mui/icons-material/Send'
 
 
 
@@ -192,8 +193,8 @@ useEffect(()=>{
                     ?""//reportPull()
             
 
-                    :<><button onClick={(e)=>{errorHandle(e)}}>Generate Report</button>
-                        <button onClick={()=>{clearAndReset()}}>New Report</button></>
+                    :<><Button variant="outlined" endIcon={<SendIcon /> }onClick={(e)=>{errorHandle(e)}}>Generate Report</Button>
+                        <Button variant="outlined" onClick={()=>{clearAndReset()}}>New Report</Button></>
                     
                     }
                     

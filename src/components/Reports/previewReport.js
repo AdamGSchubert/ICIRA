@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"
-import { Grid, tooltipClasses } from "@mui/material"
+import { Grid, tooltipClasses, Button} from "@mui/material"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend} from "chart.js"
 import {Pie} from "react-chartjs-2"
 import { Route, useNavigate } from "react-router-dom"
 import { BuildChart } from "./pieChart"
+import SendIcon from '@mui/icons-material/Send'
+
 
 
 export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDescript, frequency, reportID, reportIdentity})=>{
@@ -175,7 +177,7 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
 
            
 
-    return<><Grid>
+    return<><Grid className="preview">
     
 
         <div className="reportText">
@@ -200,13 +202,13 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
     
     {   
         reportID 
-        ? <><button onClick={()=>{deleteReport(reportID)}} >delete </button>
-        <button onClick={()=>{editSelected(reportID)}} >edit </button>
-        <button onClick={()=>{}} >export to PDF </button>
+        ? <><Button onClick={()=>{deleteReport(reportID)}} >delete </Button>
+        <Button variant="contained" onClick={()=>{editSelected(reportID)}} >edit </Button>
+        <Button onClick={()=>{}} >export to PDF </Button>
         </>
-        : reportIdentity ? <button onClick={()=>{updateReport(reportIdentity)}} >Update Report </button>
+        : reportIdentity ? <Button onClick={()=>{updateReport(reportIdentity)}} >Update Report </Button>
 
-        :  <button onClick={(event)=>{saveReport(event)}}>Save Report</button>
+        :  <Button variant="contained" endIcon={<SendIcon /> }onClick={(event)=>{saveReport(event)}}>Save Report</Button>
         
     }
     </Grid>
