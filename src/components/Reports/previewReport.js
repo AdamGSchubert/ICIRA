@@ -3,6 +3,7 @@ import { Grid, tooltipClasses } from "@mui/material"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend} from "chart.js"
 import {Pie} from "react-chartjs-2"
 import { Route, useNavigate } from "react-router-dom"
+import { BuildChart } from "./pieChart"
 
 
 export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDescript, frequency, reportID, reportIdentity})=>{
@@ -20,6 +21,8 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
     const [grossOp,setGrossOp]=useState({})
     const [industryTotal, setIndustryTotal]=useState({})
     const [noteObj, setNoteObj]=useState({})
+
+    
 
     const [report,setNewReport]=useState({
         userId: "",
@@ -167,6 +170,8 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
         const data= [ usDollar.format(industryTotal?.[0]?.DataValue),usDollar.format(grossOp?.[0]?.DataValue) ]
 
     }
+    
+    
 
            
 
@@ -189,7 +194,7 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
     <p>{noteObj?.NoteText}</p>
     </div>
     <div className="chart">
-        {}
+        <BuildChart ReportData={PreviewData} industry={industryDescript?.naicsTitle}/>
     </div>
     
     
