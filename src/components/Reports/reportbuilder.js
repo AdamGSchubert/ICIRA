@@ -205,7 +205,8 @@ useEffect(()=>{
         
         <Grid container>
         <h1>Report Preview </h1>
-        <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} industryDescript={searchIndustry} frequency={frequency} reportIdentity={reportIdentify}/>
+        <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} 
+        industryDescript={searchIndustry} frequency={frequency} reportIdentity={reportIdentify}/>
         </Grid>
     
     </Box>

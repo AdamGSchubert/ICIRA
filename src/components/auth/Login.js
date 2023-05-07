@@ -3,6 +3,8 @@ import React, { useState } from "react"
 
 import { useNavigate,Link } from "react-router-dom"
 import { FailedLoginModal } from "../modals/loginModal"
+import TextField from '@mui/material/TextField';
+import { Button, Box, Container, FormControl } from "@mui/material";
 
 
 export const Login = () => {
@@ -35,45 +37,43 @@ export const Login = () => {
                 }
             })
     }
-
+//<label htmlFor="inputEmail" className="o-form-element c-label"> Email address </label> <label htmlFor="inputPassword" className="o-form-element c-label">Password</label>
     return (
         
-        <main className="login--container">
-            
-            <section>
-                <form className="o-container o-container--xsmall c-card u-high" onSubmit={handleLogin}>
+        <Container >
+                <FormControl className="o-container o-container--xsmall c-card u-high" >
                     <h1>I.C.I.R.A.</h1>
                     <h2>Please sign in</h2>
                     <fieldset>
-                        <label htmlFor="inputEmail" className="o-form-element c-label"> Email address </label>
-                        <input type="email"
+                        
+                        <TextField type="email"
                             value={email}
                             onChange={evt => set(evt.target.value)}
                             className=" c-field c-field--label"
-                            placeholder="Email address"
+                            label="Email address"
                             required autoFocus />
                     </fieldset>
                     <fieldset>
-                        <label htmlFor="inputPassword" className="o-form-element c-label">Password</label>
-                        <input type="password"
+                        
+                        <TextField type="password"
                             value={password}
                             onChange={evt=>setPass(evt.target.value)}
-                            className=" c-field c-field--label"
-                            placeholder="password"
-                            required autoFocus></input>
+                            
+                            label="password"
+                            required autoFocus></TextField>
                     </fieldset>
                     <fieldset>
-                        <button type="submit" className="c-button c-button--brand">
+                        <Button sx={{backgroundColor:"gray",
+                        color:"black"}} 
+                        onClick={(e)=>{handleLogin(e)}} className="c-button c-button--brand">
                             Sign in
-                        </button>
+                        </Button>
                         <div className="forgotBox"><Link className="forgot_password" to="/forgotPassword">Forgot password?</Link></div>
                         <div><Link to="/register">Not a member yet?</Link></div>
                     </fieldset>
                    
-                </form>
-            </section>
-            
-        </main>
+                </FormControl>
+        </Container>
     )
 }
 
