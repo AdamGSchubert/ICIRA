@@ -5,6 +5,7 @@ import {Pie} from "react-chartjs-2"
 import { Route, useNavigate } from "react-router-dom"
 import { BuildChart } from "./pieChart"
 import SendIcon from '@mui/icons-material/Send'
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 
 
 
@@ -211,12 +212,12 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
             </Typography>
         </Grid>
     
-    <p>{noteObj?.NoteText}</p></Grid>
+    <Typography>{noteObj?.NoteText}</Typography></Grid>
     </Grid>
-    <div className="chart">
+    <Grid item className="chart" marginTop={"4rem"}>
         <BuildChart ReportData={PreviewData} industry={industryDescript?.naicsTitle}/>
-    </div>
-    <Grid>
+    </Grid>
+    <Grid item margin={"auto"}>
     {   
         reportID 
         ? <> <ButtonGroup variant="contained" orientation="vertical">

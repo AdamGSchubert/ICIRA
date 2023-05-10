@@ -72,21 +72,27 @@ const navigate =useNavigate()
             <Grid container className="reportCards" columns={4}>
                 {
                     userReports.map((report)=>{
-                        return <Card  variant="outlined" key={report.id} sx={{maxWidth: 350}}>
-                            
-                        <CardContent >
+                        return <Card  variant="outlined" key={report.id} >
+                         <Box sx={{flexgrow:1}}>
+                            <Grid container>
+                                <Grid item sx={6} maxWidth={200}>
+                                    <CardContent >
                            <Typography>{report.reportTitle}</Typography>
                             <Typography>{reportDisplay(report)} industry report for {report.reportYear}</Typography>
                             
                         </CardContent>
-
-                       <CardActions>
-                        <ButtonGroup orientation="vertical" variant="contained">
-                            <Button onClick={()=>{navigate(`/myreports/${report.id}`)}}>view</Button>
-                            <Button onClick={()=>{editSelected(report.id)}}>edit</Button>
-                            <Button onClick={()=>{deleteReport(report.id)}}>delete</Button>
-                        </ButtonGroup>
-                       </CardActions>
+                        </Grid>
+                         <Grid item sx={4}>
+                            <CardActions>
+                            <ButtonGroup orientation="vertical" variant="contained">
+                                <Button onClick={()=>{navigate(`/myreports/${report.id}`)}}>view</Button>
+                                <Button onClick={()=>{editSelected(report.id)}}>edit</Button>
+                                <Button onClick={()=>{deleteReport(report.id)}}>delete</Button>
+                            </ButtonGroup>
+                            </CardActions>
+                       </Grid>
+                       </Grid>
+                       </Box>
                        </Card>
                        
                        }

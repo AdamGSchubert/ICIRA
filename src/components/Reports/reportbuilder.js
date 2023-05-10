@@ -130,7 +130,7 @@ useEffect(()=>{
 },[editData])
 
 useEffect(()=>{
-    if(searchIndustry && buttonclick){
+    if(editData){
         reportPull()
     }
 },[searchIndustry])
