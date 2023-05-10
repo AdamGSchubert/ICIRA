@@ -2,6 +2,7 @@ import { useState,useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import SecretKeys from "../../Secrets/SecretKeys";
 import { PreviewReport } from "./previewReport";
+import { Box, Grid, Typography} from "@mui/material";
 
 export const ReportView =()=>{
     const { reportId }=useParams()
@@ -54,10 +55,16 @@ export const ReportView =()=>{
     //     report.
     // }
 
-    return <>
-    <h1>report viewer</h1>
-    <PreviewReport PreviewData={reportData} userTitle={report?.[0]?.reportTitle} selectedYear={report?.[0]?.reportYear} industryDescript={naicsObj?.[0]} frequency={report?.[0]?.reportFreq} reportID={reportId}/>
-    
+    return <> <Box>
+    <Grid container columns={2} >
+        <Grid item xs={12} center>
+            <Typography variant="h3" center>Report Viewer</Typography>
+            </Grid>
+    <Grid item>
+        <PreviewReport PreviewData={reportData} userTitle={report?.[0]?.reportTitle} selectedYear={report?.[0]?.reportYear} industryDescript={naicsObj?.[0]} frequency={report?.[0]?.reportFreq} reportID={reportId}/>
+    </Grid>  
+    </Grid>
+    </Box>
     
     
     </>

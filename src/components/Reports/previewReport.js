@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Grid, tooltipClasses, Button} from "@mui/material"
+import { Grid, tooltipClasses, Button, Box, Typography, ButtonGroup} from "@mui/material"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend} from "chart.js"
 import {Pie} from "react-chartjs-2"
 import { Route, useNavigate } from "react-router-dom"
@@ -177,34 +177,53 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
 
            
 
-    return<><Grid className="preview">
+    return<><Box className="preview" >
     
-
-        <div className="reportText">
-            <h1>{userTitle}</h1>
-        <div><ul>
-            <li>{industryDescript ? industryDescript.naicsTitle : "Select an industry" } for {selectedYear===2023 ? "selected year" : selectedYear }</li>
-            <li>N.A.I.C.S. Code:{industryTotal?.[0]?.Industry}</li>
-            </ul> </div>    
-        
-    <ul>{/* this checks if the value from the BEA API object exist if not show blank*/}
-        <li>Industry Total: {industryTotal?.[0]?.DataValue ? usDollar.format(industryTotal?.[0]?.DataValue) : ""}</li>
-        <li>Industry Gross Surplus (profit): { grossOp?.[0]?.DataValue ? usDollar.format(grossOp?.[0]?.DataValue) : ""}</li>
-        <li>Industry Compensation: {compensation?.[0]?.DataValue ? usDollar.format(compensation?.[0]?.DataValue) : ""} </li>
-        <li>Industry Taxes: {industryTax?.[0]?.DataValue ? usDollar.format(industryTax?.[0]?.DataValue): ""}</li>
-    </ul>
-    <p>{noteObj?.NoteText}</p>
-    </div>
+    <Grid container columns={3} margin={"2rem"}>
+        <Grid className="reportText">
+            <Typography variant="h2">{userTitle}</Typography>
+        <Grid >
+            <Grid >
+                <Typography>{industryDescript ? industryDescript.naicsTitle : "Select an industry" } for {selectedYear===2023 ? "selected year" : selectedYear }
+                </Typography>
+            </Grid>
+            <Grid>
+                <Typography>N.A.I.C.S. Code:{industryTotal?.[0]?.Industry}
+                </Typography>
+            </Grid>
+        </Grid>    
+        <Grid>
+    {/* this checks if the value from the BEA API object exist if not show blank*/}
+        <Grid item marginTop={"2rem"}>
+            <Typography variant="h7">Industry Total: {industryTotal?.[0]?.DataValue ? usDollar.format(industryTotal?.[0]?.DataValue) : ""}
+            </Typography>
+        </Grid>
+        <Grid item>
+            <Typography variant="h7">Industry Gross Surplus (profit): { grossOp?.[0]?.DataValue ? usDollar.format(grossOp?.[0]?.DataValue) : ""}
+            </Typography>
+        </Grid>
+        <Grid item>
+            <Typography variant="h7">Industry Compensation: {compensation?.[0]?.DataValue ? usDollar.format(compensation?.[0]?.DataValue) : ""}
+            </Typography> 
+        </Grid>
+        <Grid item>
+            <Typography variant="h7">Industry Taxes: {industryTax?.[0]?.DataValue ? usDollar.format(industryTax?.[0]?.DataValue): ""}
+            </Typography>
+        </Grid>
+    
+    <p>{noteObj?.NoteText}</p></Grid>
+    </Grid>
     <div className="chart">
         <BuildChart ReportData={PreviewData} industry={industryDescript?.naicsTitle}/>
     </div>
-    
-    
+    <Grid>
     {   
         reportID 
-        ? <><Button onClick={()=>{deleteReport(reportID)}} >delete </Button>
+        ? <> <ButtonGroup variant="contained" orientation="vertical">
+            <Button onClick={()=>{deleteReport(reportID)}} >delete </Button>
         <Button variant="contained" onClick={()=>{editSelected(reportID)}} >edit </Button>
         <Button onClick={()=>{}} >export to PDF </Button>
+        </ButtonGroup>
         </>
         : reportIdentity ? <Button onClick={()=>{updateReport(reportIdentity)}} >Update Report </Button>
 
@@ -212,5 +231,8 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
         
     }
     </Grid>
+    </Grid>
+    
+    </Box>
     </>
 }

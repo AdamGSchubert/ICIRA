@@ -1,6 +1,7 @@
 
 import { useEffect,useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { ButtonGroup, Grid,Button, Typography, Card, CardContent,Box, CardActions } from "@mui/material"
 
 
 
@@ -66,25 +67,34 @@ const navigate =useNavigate()
             navigate(`/editreport/${reportId}`)
         }
 
-    return <><h1>user reports</h1>
-        <section>
-            <div className="reportCards">
+    return <><Typography variant="h3">user reports</Typography>
+        <Box>
+            <Grid container className="reportCards" columns={4}>
                 {
                     userReports.map((report)=>{
-                        return <div key={report.id}>
-                           <h2>{report.reportTitle}</h2>
-                            <h3>{report.reportYear} for the {reportDisplay(report)} Industry</h3>
+                        return <Card  variant="outlined" key={report.id} sx={{maxWidth: 350}}>
+                            
+                        <CardContent >
+                           <Typography>{report.reportTitle}</Typography>
+                            <Typography>{reportDisplay(report)} industry report for {report.reportYear}</Typography>
+                            
+                        </CardContent>
+
+                       <CardActions>
+                        <ButtonGroup orientation="vertical" variant="contained">
+                            <Button onClick={()=>{navigate(`/myreports/${report.id}`)}}>view</Button>
+                            <Button onClick={()=>{editSelected(report.id)}}>edit</Button>
+                            <Button onClick={()=>{deleteReport(report.id)}}>delete</Button>
+                        </ButtonGroup>
+                       </CardActions>
+                       </Card>
                        
-                       <button onClick={()=>{navigate(`/myreports/${report.id}`)}}>view</button>
-                       <button onClick={()=>{editSelected(report.id)}}>edit</button>
-                       <button onClick={()=>{deleteReport(report.id)}}>delete</button>
-                       </div>
                        }
                         )
                 }
 
-            </div>
-        </section>
+            </Grid>
+        </Box>
     
     
     

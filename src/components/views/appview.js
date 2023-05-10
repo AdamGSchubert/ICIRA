@@ -9,26 +9,29 @@ import { ReportView } from "../Reports/reportview"
 import { EditReport} from "../Reports/editReport"
 
 
-const iciraUser = localStorage.getItem("IciraUser")
-const currentUser =JSON.parse(iciraUser)
 
-const api= "http://localhost:8088"
+
+
 
 export const AppView =()=>{
-
-    const [user, setUser] = useState([])
-    const navigate = useNavigate()
-    //navigate("/login")
-    useEffect(()=>{
-        fetch(`${api}/IciraUsers/${currentUser.id}`)
-        .then(response =>response.json())
-        .then((data) => {
-            setUser(data)
-        })
-    },[]
-    )
+const api= "http://localhost:8088"
     
-    
+   
+const iciraUser = localStorage.getItem("IciraUser")
+ const currentUser =JSON.parse(iciraUser)
+ const [user, setUser] = useState([])
+ const navigate = useNavigate()
+ //navigate("/login")
+ useEffect(()=>{
+     fetch(`${api}/IciraUsers/${currentUser.id}`)
+     .then(response =>response.json())
+     .then((data) => {
+         setUser(data)
+     })
+ },[]
+ )
+ 
+ 
     return (
     <Routes>
         <Route path="home" element={<>

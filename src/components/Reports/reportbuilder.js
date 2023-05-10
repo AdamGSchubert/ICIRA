@@ -1,12 +1,12 @@
 import { useEffect,useState } from "react";
 import * as React from 'react';
-import TextField from '@mui/material/TextField';
+// import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import SecretKeys from "../../Secrets/SecretKeys";
 import { blue, green } from "@mui/material/colors";
 import { ErrorReport, reportError } from "../ErrorHandle/errorHandles";
 import { PreviewReport } from "./previewReport";
-import { Box, Grid,Button } from "@mui/material";
+import { Box, Grid,Button, Typography,TextField } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send'
 
 
@@ -130,17 +130,23 @@ useEffect(()=>{
 },[editData])
 
 useEffect(()=>{
-    if(searchIndustry){
+    if(searchIndustry && buttonclick){
         reportPull()
     }
 },[searchIndustry])
    
     //console.log(searchIndustry)
-    return<Box sx={{flexGrow:1}}>
+    return<Box sx={{flexGrow:1}} className="QuerySelect" >
     
-        <Grid columns={2} className="QuerySelect">
-            <ul className="queryBuilder"> 
-                <li className="industryAutoComplete">
+        <Grid container  >
+            <Grid item className="queryBuilder"  md={4}> 
+            <Grid item >
+            <Typography >Report Options </Typography>
+            </Grid>
+                <Grid item className="industryAutoComplete" 
+                // sx={1} 
+                padding={"1rem"}
+                >
                     <Autocomplete
                     disablePortal
                     id="industryAuto"
@@ -152,14 +158,18 @@ useEffect(()=>{
                      //isOptionEqualToValue={(option, value)=> option===value}
                     renderInput={(params)=><TextField {...params} label="industries" variant="outlined"/>   } 
                     onChange={(event,value)=>{setSearchIndustry(value)}}/>
-                </li>
+                </Grid>
 
-                <li className="testing">
+                <Grid item className="testing" 
+                //sx={2}
+                >
                     <label htmlFor="reportYear">select a report year</label>
                     <select id="reportYear"  placeholder={currentYear} value={reportYear} onChange={ (e)=> {setReportYr(e.nativeEvent.target.selectedOptions[0].innerText)}}>
                         </select>       
-                    </li>
-                <li >
+                    </Grid>
+                <Grid item md
+                 //sx={2}
+                >
                     <label htmlFor="reportFrequency">select frequency for the report</label>
                     <ul>
                     <li><input type="radio" 
@@ -181,33 +191,37 @@ useEffect(()=>{
                     
                     onChange={(rep)=>setFrequency(rep.target.value)}/>Annual and Quarterly (returns Annual if no Quarterly)</li>
                     </ul>
-                </li>
-                <li>
-                    <label htmlFor="reportName" >Enter Desired Report Title</label>
+                </Grid>
+                <Grid item>
+                    {/* <label htmlFor="reportName" >Enter Desired Report Title</label> */}
                     
-                    <input type="text" id="reportName"  value={reportTitle} onChange={(text)=>{setReportTitle(text.target.value)}}/>
+                    <TextField  id="reportName" label="Enter Desired Report Title" variant="outlined" value={reportTitle} onChange={(text)=>{setReportTitle(text.target.value)}}/>
                     
-                </li>
-                <li>{
+                </Grid>
+                <Grid item>{
                     editData 
                     ?""//reportPull()
             
 
-                    :<><Button variant="outlined" endIcon={<SendIcon /> }onClick={(e)=>{errorHandle(e)}}>Generate Report</Button>
-                        <Button variant="outlined" onClick={()=>{clearAndReset()}}>New Report</Button></>
+                    :<><Button variant="contained" endIcon={<SendIcon /> } onClick={(e)=>{errorHandle(e)}}>Generate Report</Button>
+                        <Button variant="contained" onClick={()=>{clearAndReset()}}>New Report</Button></>
                     
                     }
-                    
-                </li>
-            </ul>
-            <ErrorReport dataCheck={reportData}/>
+                    <ErrorReport dataCheck={reportData}/>
+                </Grid>
+            </Grid>
+            
+        <Grid item md={6} paddingLeft={"2rem"}>
+        <Grid item>
+            <Typography >Report Preview </Typography>
+            </Grid>
+            <Grid item md={12}><PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} 
+        industryDescript={searchIndustry} frequency={frequency} reportIdentity={reportIdentify}/></Grid>
+        
+        </Grid>
         </Grid>   
         
-        <Grid container>
-        <h1>Report Preview </h1>
-        <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} 
-        industryDescript={searchIndustry} frequency={frequency} reportIdentity={reportIdentify}/>
-        </Grid>
+        
     
     </Box>
     
