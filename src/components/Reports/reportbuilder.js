@@ -6,7 +6,7 @@ import SecretKeys from "../../Secrets/SecretKeys";
 import { blue, green } from "@mui/material/colors";
 import { ErrorReport, reportError } from "../ErrorHandle/errorHandles";
 import { PreviewReport } from "./previewReport";
-import { Box, Grid,Button, Typography,TextField } from "@mui/material";
+import { Box, Grid,Button, Typography,TextField, Paper, Card } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send'
 
 
@@ -136,15 +136,23 @@ useEffect(()=>{
 },[searchIndustry])
    
     //console.log(searchIndustry)
-    return<Box sx={{flexGrow:1}} className="QuerySelect" >
-    
-        <Grid container  >
-            <Grid item className="queryBuilder"  md={4}> 
-            <Grid item >
-            <Typography >Report Options </Typography>
+    return<Box sx={{flexGrow:1}} className="QuerySelect" margin={2}>
+        
+        <Grid container columns={2} sx={{flexGrow:1}}>
+           <Grid container item md={12}>
+                <Grid item md={4}>
+                    <Typography variant="h2" align="center">Report Options </Typography>
+                </Grid>
             </Grid>
+            
+            
+            <Grid container item colums={2} marginLeft={3} sx={{flexGrow:1}}>
+                <Paper>
+                    
+            
                 <Grid item className="industryAutoComplete" 
-                // sx={1} 
+                md={4}
+                margin={2}
                 padding={"1rem"}
                 >
                     <Autocomplete
@@ -161,14 +169,14 @@ useEffect(()=>{
                 </Grid>
 
                 <Grid item className="testing" 
-                //sx={2}
+                padding={2}
                 >
                     <label htmlFor="reportYear">select a report year</label>
                     <select id="reportYear"  placeholder={currentYear} value={reportYear} onChange={ (e)=> {setReportYr(e.nativeEvent.target.selectedOptions[0].innerText)}}>
                         </select>       
                     </Grid>
-                <Grid item md
-                 //sx={2}
+                <Grid item 
+                 padding={2}
                 >
                     <label htmlFor="reportFrequency">select frequency for the report</label>
                     <ul>
@@ -192,13 +200,13 @@ useEffect(()=>{
                     onChange={(rep)=>setFrequency(rep.target.value)}/>Annual and Quarterly (returns Annual if no Quarterly)</li>
                     </ul>
                 </Grid>
-                <Grid item>
+                <Grid item padding={2}>
                     {/* <label htmlFor="reportName" >Enter Desired Report Title</label> */}
                     
                     <TextField  id="reportName" label="Enter Desired Report Title" variant="outlined" value={reportTitle} onChange={(text)=>{setReportTitle(text.target.value)}}/>
                     
                 </Grid>
-                <Grid item>{
+                <Grid item padding={2}>{
                     editData 
                     ?""//reportPull()
             
@@ -209,17 +217,37 @@ useEffect(()=>{
                     }
                     <ErrorReport dataCheck={reportData}/>
                 </Grid>
+                
+                
+                
+                </Paper>
+                 <Grid item md={8} marginLeft={2}>
+                 <Grid item  marginTop={-9} >
+            <Typography variant="h2" align="center">Report Preview </Typography>
             </Grid>
-            
-        <Grid item md={6} paddingLeft={"2rem"}>
-        <Grid item>
-            <Typography >Report Preview </Typography>
-            </Grid>
-            <Grid item md={12}><PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} 
-        industryDescript={searchIndustry} frequency={frequency} reportIdentity={reportIdentify}/></Grid>
-        
+                    <Paper variant="outlined">
+                        <Grid item>
+                <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} 
+        industryDescript={searchIndustry} frequency={frequency} reportIdentity={reportIdentify} margin={2}/>
         </Grid>
-        </Grid>   
+        </Paper>
+        </Grid>
+        
+                </Grid>
+                {/* <Grid item md={6}> */}
+                
+        {/* </Grid> */}
+                
+        </Grid>
+            
+            
+        
+            
+        
+            
+        
+        
+           
         
         
     

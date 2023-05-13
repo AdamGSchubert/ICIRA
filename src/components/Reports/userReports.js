@@ -84,8 +84,8 @@ const navigate =useNavigate()
                         </Grid>
                          <Grid item sx={4}>
                             <CardActions>
-                            <ButtonGroup orientation="vertical" variant="contained">
-                                <Button onClick={()=>{navigate(`/myreports/${report.id}`)}}>view</Button>
+                            <ButtonGroup orientation="vertical" variant="outlined" color="secondary">
+                                <Button  onClick={()=>{navigate(`/myreports/${report.id}`)}}>view</Button>
                                 <Button onClick={()=>{editSelected(report.id)}}>edit</Button>
                                 <Button onClick={()=>{deleteReport(report.id)}}>delete</Button>
                             </ButtonGroup>

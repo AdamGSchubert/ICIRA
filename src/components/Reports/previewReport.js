@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Grid, tooltipClasses, Button, Box, Typography, ButtonGroup} from "@mui/material"
+import { Grid, tooltipClasses, Button, Box, Typography, ButtonGroup, Paper} from "@mui/material"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend} from "chart.js"
 import {Pie} from "react-chartjs-2"
 import { Route, useNavigate } from "react-router-dom"
@@ -178,9 +178,9 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
 
            
 
-    return<><Box className="preview" >
-    
-    <Grid container columns={3} margin={"2rem"}>
+    return<><Box className="preview" sx={{flexGrow:1}}>
+    <Paper variant="outlined">
+    <Grid container columns={3} margin={9}>
         <Grid className="reportText">
             <Typography variant="h2">{userTitle}</Typography>
         <Grid >
@@ -212,7 +212,7 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
             </Typography>
         </Grid>
     
-    <Typography>{noteObj?.NoteText}</Typography></Grid>
+    <Typography wrap>{noteObj?.NoteText}</Typography></Grid>
     </Grid>
     <Grid item className="chart" marginTop={"4rem"}>
         <BuildChart ReportData={PreviewData} industry={industryDescript?.naicsTitle}/>
@@ -220,9 +220,9 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
     <Grid item margin={"auto"}>
     {   
         reportID 
-        ? <> <ButtonGroup variant="contained" orientation="vertical">
+        ? <> <ButtonGroup variant="outlined" color="secondary" orientation="vertical">
             <Button onClick={()=>{deleteReport(reportID)}} >delete </Button>
-        <Button variant="contained" onClick={()=>{editSelected(reportID)}} >edit </Button>
+        <Button onClick={()=>{editSelected(reportID)}} >edit </Button>
         <Button onClick={()=>{}} >export to PDF </Button>
         </ButtonGroup>
         </>
@@ -233,7 +233,7 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
     }
     </Grid>
     </Grid>
-    
+    </Paper>
     </Box>
     </>
 }

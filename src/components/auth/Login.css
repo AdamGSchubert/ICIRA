@@ -1,5 +1,5 @@
 .Login_container{
-    background-color: rgb(209, 218, 209);
+    /* background-color: rgb(209, 218, 209); */
     border-radius: 2%;
     padding: 2rem
 }
@@ -10,7 +10,7 @@
     font-size: 48px;
 } */
 .Login_form{
-    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(255, 255, 255); */
     border-radius: 3px;
 }
 

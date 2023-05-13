@@ -55,12 +55,12 @@ export const ReportView =()=>{
     //     report.
     // }
 
-    return <> <Box>
+    return <> <Box marginLeft={"25%"} >
     <Grid container columns={2} >
         <Grid item xs={12} center>
             <Typography variant="h3" center>Report Viewer</Typography>
             </Grid>
-    <Grid item>
+    <Grid item wrap>
         <PreviewReport PreviewData={reportData} userTitle={report?.[0]?.reportTitle} selectedYear={report?.[0]?.reportYear} industryDescript={naicsObj?.[0]} frequency={report?.[0]?.reportFreq} reportID={reportId}/>
     </Grid>  
     </Grid>
