@@ -1,12 +1,13 @@
 import { useEffect,useState } from "react";
 import * as React from 'react';
-import TextField from '@mui/material/TextField';
+// import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import SecretKeys from "../../Secrets/SecretKeys";
 import { blue, green } from "@mui/material/colors";
 import { ErrorReport, reportError } from "../ErrorHandle/errorHandles";
 import { PreviewReport } from "./previewReport";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid,Button, Typography,TextField, Paper, Card, Container, Stack } from "@mui/material";
+import SendIcon from '@mui/icons-material/Send'
 
 
 
@@ -129,17 +130,37 @@ useEffect(()=>{
 },[editData])
 
 useEffect(()=>{
-    if(searchIndustry){
+    if(editData){
         reportPull()
     }
 },[searchIndustry])
    
     //console.log(searchIndustry)
-    return<Box sx={{flexGrow:1}}>
-    
-        <Grid columns={2} className="QuerySelect">
-            <ul className="queryBuilder"> 
-                <li className="industryAutoComplete">
+    return<Stack direction="row" margin={"2%"}>
+        {/* <Box sx={{flexGrow:1}} className="QuerySelect" margin={2}> */}
+        
+           {/* <Grid container item md={12}>
+              > */}
+            
+            
+            
+            
+            <Grid item className="reportselection"  md={4} margin={"auto"}>
+                
+                <Grid item align="center">
+                    <Typography variant="h2" >Report Options </Typography>
+                </Grid>
+                {/* <Box> */}
+                <Grid sx={{minHeight: "474px"}} container md={12} margin={"auto"} height={"88%"}> 
+                 <Paper >  
+                
+                {/* <Grid item md={12} > */}
+                <Grid item className="industryAutoComplete" 
+                // md={6}
+                margin={2}
+                // padding={"1rem"}
+                fullWidth
+                >
                     <Autocomplete
                     disablePortal
                     id="industryAuto"
@@ -147,19 +168,24 @@ useEffect(()=>{
                     getOptionLabel={(option)=>option.naicsTitle}
                     // defaultValue={""}
                      value={searchIndustry}
-                    sx={{width:400, height:50}}
+                    // sx={{width:400, height:50}}
                      //isOptionEqualToValue={(option, value)=> option===value}
                     renderInput={(params)=><TextField {...params} label="industries" variant="outlined"/>   } 
-                    onChange={(event,value)=>{setSearchIndustry(value)}}/>
-                </li>
+                    onChange={(event,value)=>{setSearchIndustry(value)}}
+                    fullWidth/>
+                </Grid>
 
-                <li className="testing">
+                <Grid item className="testing" 
+                padding={2}
+                >
                     <label htmlFor="reportYear">select a report year</label>
                     <select id="reportYear"  placeholder={currentYear} value={reportYear} onChange={ (e)=> {setReportYr(e.nativeEvent.target.selectedOptions[0].innerText)}}>
                         </select>       
-                    </li>
-                <li >
-                    <label htmlFor="reportFrequency">select frequency for the report</label>
+                    </Grid>
+                <Grid item 
+                 padding={2}
+                >
+                    <label htmlFor="reportFrequency">select the frequency for the report</label>
                     <ul>
                     <li><input type="radio" 
                     name="reportFrequency" 
@@ -180,33 +206,69 @@ useEffect(()=>{
                     
                     onChange={(rep)=>setFrequency(rep.target.value)}/>Annual and Quarterly (returns Annual if no Quarterly)</li>
                     </ul>
-                </li>
-                <li>
-                    <label htmlFor="reportName" >Enter Desired Report Title</label>
+                </Grid>
+                <Grid item padding={2}>
+                    {/* <label htmlFor="reportName" >Enter Desired Report Title</label> */}
                     
-                    <input type="text" id="reportName"  value={reportTitle} onChange={(text)=>{setReportTitle(text.target.value)}}/>
+                    <TextField fullWidth id="reportName" label="Enter Desired Report Title" variant="outlined" value={reportTitle} onChange={(text)=>{setReportTitle(text.target.value)}}/>
                     
-                </li>
-                <li>{
+                </Grid>
+                <Grid item padding={2}>{
                     editData 
                     ?""//reportPull()
             
 
-                    :<><button onClick={(e)=>{errorHandle(e)}}>Generate Report</button>
-                        <button onClick={()=>{clearAndReset()}}>New Report</button></>
+                    :<><Grid container margin={"auto"}><Grid item margin={"auto"}><Button variant="contained" endIcon={<SendIcon /> } onClick={(e)=>{errorHandle(e)}}>Generate Report</Button></Grid>
+                        <Grid item margin={"auto"}><Button variant="contained" onClick={()=>{clearAndReset()}}>New Report</Button></Grid></Grid></>
                     
                     }
+                    <ErrorReport dataCheck={reportData}/>
+                </Grid>
+                {/* </Grid> */}
+                </Paper>
+                </Grid>
+                {/* </Box>  */}
+            </Grid>
+                
+                
+                
+                
+                 <Grid item className="reportdata"  md={8} margin={"auto"}>
+                 
+            <Grid item  >
+            <Typography variant="h2" >Report Preview </Typography>
+            </Grid>
                     
-                </li>
-            </ul>
-            <ErrorReport dataCheck={reportData}/>
-        </Grid>   
-        
-        <Grid container>
-        <h1>Report Preview </h1>
-        <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} industryDescript={searchIndustry} frequency={frequency} reportIdentity={reportIdentify}/>
+                    
+                        <Grid item md={12} sx={{minHeight: "476px"}} className="reportpreview">
+                            {/* <Paper variant="outlined" className="reportPreviewPaper"> */}
+                                {/* <Grid item md={12} > */}
+                <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} 
+        industryDescript={searchIndustry} frequency={frequency} reportIdentity={reportIdentify} />
+        {/* </Grid> */}
+        {/* </Paper> */}
         </Grid>
+        
+        </Grid>
+        
+                </Stack>
+                {/* <Grid item md={6}> */}
+                
+        {/* </Grid> */}
+                
+        {/* </Grid> */}
+            
+            
+        
+            
+        
+            
+        
+        
+           
+        
+        
     
-    </Box>
+    // </Box>
     
 }

@@ -1,6 +1,7 @@
 
 import { useEffect,useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { ButtonGroup, Grid,Button, Typography, Card, CardContent,Box, CardActions, Paper} from "@mui/material"
 
 
 
@@ -65,28 +66,68 @@ const navigate =useNavigate()
         const editSelected =(reportId)=>{
             navigate(`/editreport/${reportId}`)
         }
+        let reversedReports = [...userReports].reverse()
 
-    return <><h1>user reports</h1>
-        <section>
-            <div className="reportCards">
+    return <><Box>
+        <Grid container align="center">
+        <Grid item xs={12} align="center">
+        <Typography variant="h3" >User Reports</Typography>
+        
+        <Typography marginTop={2} variant="body1">Report ordered Latest to Oldest</Typography>
+    </Grid>
+    </Grid>
+        <Box margin={5} >
+            <Grid container md={12}>
+                    <Paper>
+                        </Paper>
+                    
+                </Grid>
+            <Grid container className="reportCards" md={12}  rowGap={2} columnGap={1} sx={{flexGrow:1}}>
+                {/* xs={12} sx={{flexGrow:1}} paddingLeft={5}*/}
                 {
-                    userReports.map((report)=>{
-                        return <div key={report.id}>
-                           <h2>{report.reportTitle}</h2>
-                            <h3>{report.reportYear} for the {reportDisplay(report)} Industry</h3>
+                    
+                    reversedReports.map((report)=>{
+                        return <Grid container margin="auto" xs={8}  alignItems={"center"}  >
+                            <Grid item xs align="center" margin={"auto"} >
+                        <Card variant="outlined" key={report.id}  >
+                         
+                            <Grid container padding={"1%"} sx={{flexGrow:1}}>
+                                <Grid item xs={8} align="center">
+                                    {/* <CardContent > */}
+                                    <Grid item>
+                                        <Typography gutterBottom>{report.reportTitle}</Typography>
+                                        </Grid>
+                           
+                          {/* </CardContent>
+                          <CardContent > */}
+                          <Grid item >
+                            <Typography gutterBottom>{reportDisplay(report)} industry report for {report.reportYear}</Typography>
+                             </Grid>{/* <br/> */}
+                        {/* </CardContent> */}
+                        </Grid> 
+                         <Grid item xs={2} margin={"auto"} align="center">
+                            
+                            <ButtonGroup orientation="horizontal" variant="outlined" color="secondary" >
+                                <Button  onClick={()=>{navigate(`/myreports/${report.id}`)}}>view</Button>
+                                <Button onClick={()=>{editSelected(report.id)}}>edit</Button>
+                                <Button onClick={()=>{deleteReport(report.id)}}>delete</Button>
+                            </ButtonGroup>
+                           
+                       </Grid>
+                       </Grid>
                        
-                       <button onClick={()=>{navigate(`/myreports/${report.id}`)}}>view</button>
-                       <button onClick={()=>{editSelected(report.id)}}>edit</button>
-                       <button onClick={()=>{deleteReport(report.id)}}>delete</button>
-                       </div>
+                       </Card>
+                       </Grid>
+                       </Grid>
                        }
                         )
                 }
+                
 
-            </div>
-        </section>
+            </Grid>
+        </Box>
     
-    
+        </Box>
     
     
     

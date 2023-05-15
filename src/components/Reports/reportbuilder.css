@@ -10,15 +10,19 @@
 .testing{
     margin-top: 3rem;
 } */
-.reportPage{
+/* .reportPage{
     display:flex;
     flex-direction: row;
-}
-.reportPreview{
+} */
+/* .reportPreview{
     background-color: aqua;
     width: 400rem;
     height: 400rem;
-}
+} */
 .QuerySelect{
-    background-color: aqua;
+    display: grid;
+    background-color: rgb(209, 218, 209);
+    border-radius: 2%;
+    padding: 2rem;
+    justify-content: space-evenly;
 }

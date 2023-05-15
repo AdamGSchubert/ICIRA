@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Grid, tooltipClasses } from "@mui/material"
+import { Container, Grid, tooltipClasses } from "@mui/material"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend} from "chart.js"
 import {Chart, Pie} from "react-chartjs-2"
 import { Route, useNavigate } from "react-router-dom"
@@ -68,7 +68,13 @@ export const BuildChart =({ReportData,industry})=>{
       };
       
       
-        return <Pie data={data} />;
+        return <>
+        <Container sx={{ maxHeight: '500px' }}>
+          <Pie data={data}  />
+
+        </Container>
+        
+        </>;
 
       
 }

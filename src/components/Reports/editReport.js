@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import SecretKeys from "../../Secrets/SecretKeys";
 import { PreviewReport } from "./previewReport";
 import { ReportGenerator } from "./reportbuilder"; 
+import { Grid, Typography } from "@mui/material";
 
 
 export const EditReport =()=>{
@@ -24,10 +25,15 @@ export const EditReport =()=>{
         })
     },[reportId])
 //{editReport ? <ReportGenerator editData={editReport} reportIdentify={reportId}/> :""}
-return <>
-    <h1>edit this report</h1>
-   <ReportGenerator editData={editReport} reportIdentify={reportId}/> 
+return <><Grid margin="auto">
+    <Grid item align="center">
+    <Typography variant="h2">Edit Selected Report</Typography>
+    </Grid>
+    <Grid item  >
+        <ReportGenerator editData={editReport} reportIdentify={reportId}/>
+        </Grid>
     
+    </Grid>
 
 
 </>

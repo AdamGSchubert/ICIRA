@@ -1,0 +1,9 @@
+.preview{
+    background-color: rgb(209, 218, 209);
+    border-radius: 2%;
+    padding: 2rem
+}
+.chart{
+    max-width: 50%;
+    max-height: 50%;
+}
