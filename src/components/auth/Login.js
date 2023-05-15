@@ -16,12 +16,14 @@ import loginImage from "../imgs/login_img.jpg"
 import LoginIcon from '@mui/icons-material/Login';
 import '@fontsource/roboto/700.css';
 import '@fontsource/roboto/700-italic.css'
+import { ErrorReport } from "../ErrorHandle/errorHandles";
 
 export const Login = () => {
     const [email, set] = useState("")
     const [password, setPass]=useState("")
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
+    const [failedLogin, setFailedLogin] =useState(false)
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
   
@@ -50,12 +52,12 @@ export const Login = () => {
                         admin: user.isAdmin
                     }))
 
-                    navigate("/")
+                    navigate("/home")
                 }
                 else {
                     //window.alert("Invalid login")
                     console.log("invalid login")
-                    return <><FailedLoginModal/></>
+                    setFailedLogin(true)
                     
                 }
             })
@@ -150,6 +152,7 @@ export const Login = () => {
                                             }
                                             label="Password"
                                         />
+                                        <ErrorReport loginPass={failedLogin}/>
                                     {/* </FormControl> */}
                                     <Grid item marginTop={3}  >
                                     <Button  variant="contained" fullWidth onClick={(e) => handleLogin(e)} endIcon={<LoginIcon />}>

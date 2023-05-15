@@ -2,7 +2,7 @@ import {useLocation, useNavigate, Link, Route, Routes, Outlet} from "react-route
 import { Authorized } from "./authorized"
 import {useEffect,useState} from "react"
 import { UserProfile } from "../userpages/profile"
-import '@blaze/atoms'
+import { Typography,Grid,Paper } from "@mui/material"
 import { ReportGenerator } from "../Reports/reportbuilder"
 import { UserReportList } from "../Reports/userReports"
 import { ReportView } from "../Reports/reportview"
@@ -35,8 +35,14 @@ const iciraUser = localStorage.getItem("IciraUser")
     return (
     <Routes>
         <Route path="home" element={<>
+        <Grid container>
 
-        <h1>this is the homepage on the appview</h1>
+            <Typography>Welcome to Icira xyz</Typography>
+
+
+
+
+        </Grid>
             <Outlet/>
         </>
     }>

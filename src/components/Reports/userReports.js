@@ -1,7 +1,7 @@
 
 import { useEffect,useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { ButtonGroup, Grid,Button, Typography, Card, CardContent,Box, CardActions } from "@mui/material"
+import { ButtonGroup, Grid,Button, Typography, Card, CardContent,Box, CardActions, Paper} from "@mui/material"
 
 
 
@@ -66,43 +66,68 @@ const navigate =useNavigate()
         const editSelected =(reportId)=>{
             navigate(`/editreport/${reportId}`)
         }
+        let reversedReports = [...userReports].reverse()
 
-    return <><Typography variant="h3">user reports</Typography>
-        <Box>
-            <Grid container className="reportCards" columns={4}>
+    return <><Box>
+        <Grid container align="center">
+        <Grid item xs={12} align="center">
+        <Typography variant="h3" >User Reports</Typography>
+        
+        <Typography marginTop={2} variant="body1">Report ordered Latest to Oldest</Typography>
+    </Grid>
+    </Grid>
+        <Box margin={5} >
+            <Grid container md={12}>
+                    <Paper>
+                        </Paper>
+                    
+                </Grid>
+            <Grid container className="reportCards" md={12}  rowGap={2} columnGap={1} sx={{flexGrow:1}}>
+                {/* xs={12} sx={{flexGrow:1}} paddingLeft={5}*/}
                 {
-                    userReports.map((report)=>{
-                        return <Card  variant="outlined" key={report.id} >
-                         <Box sx={{flexgrow:1}}>
-                            <Grid container>
-                                <Grid item sx={6} maxWidth={200}>
-                                    <CardContent >
-                           <Typography>{report.reportTitle}</Typography>
-                            <Typography>{reportDisplay(report)} industry report for {report.reportYear}</Typography>
+                    
+                    reversedReports.map((report)=>{
+                        return <Grid container margin="auto" xs={8}  alignItems={"center"}  >
+                            <Grid item xs align="center" margin={"auto"} >
+                        <Card variant="outlined" key={report.id}  >
+                         
+                            <Grid container padding={"1%"} sx={{flexGrow:1}}>
+                                <Grid item xs={8} align="center">
+                                    {/* <CardContent > */}
+                                    <Grid item>
+                                        <Typography gutterBottom>{report.reportTitle}</Typography>
+                                        </Grid>
+                           
+                          {/* </CardContent>
+                          <CardContent > */}
+                          <Grid item >
+                            <Typography gutterBottom>{reportDisplay(report)} industry report for {report.reportYear}</Typography>
+                             </Grid>{/* <br/> */}
+                        {/* </CardContent> */}
+                        </Grid> 
+                         <Grid item xs={2} margin={"auto"} align="center">
                             
-                        </CardContent>
-                        </Grid>
-                         <Grid item sx={4}>
-                            <CardActions>
-                            <ButtonGroup orientation="vertical" variant="outlined" color="secondary">
+                            <ButtonGroup orientation="horizontal" variant="outlined" color="secondary" >
                                 <Button  onClick={()=>{navigate(`/myreports/${report.id}`)}}>view</Button>
                                 <Button onClick={()=>{editSelected(report.id)}}>edit</Button>
                                 <Button onClick={()=>{deleteReport(report.id)}}>delete</Button>
                             </ButtonGroup>
-                            </CardActions>
+                           
                        </Grid>
                        </Grid>
-                       </Box>
-                       </Card>
                        
+                       </Card>
+                       </Grid>
+                       </Grid>
                        }
                         )
                 }
+                
 
             </Grid>
         </Box>
     
-    
+        </Box>
     
     
     

@@ -16,6 +16,7 @@ import logo from '../imgs/IciraLogo.ico'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 
+
 export const NavBar=()=>{
     const iciraUser = localStorage.getItem("IciraUser")
     const currentUser =JSON.parse(iciraUser)
@@ -136,6 +137,15 @@ export const NavBar=()=>{
         );
       };
 
+       const LogOutUser=()=>{
+            navigate("/login")
+                localStorage.removeItem("IciraUser")
+            ;}
+      // const userLogOut = {<MenuItem key="Log Out" onClick={()=>{LogOut()}}>
+      //       <Typography textAlign="center" variant="h6" noWrap component="a">
+      //         Log Out
+      //       </Typography>
+      //     </MenuItem>};
  
  return <> <AppBar position="static" color="primary">
        <Container maxWidth="xl">
@@ -243,6 +253,11 @@ export const NavBar=()=>{
                onClose={handleCloseUserMenu}
              >
                {appBarMenu("My Profile", "myprofile")}
+               <MenuItem key="Log Out" onClick={()=>{LogOutUser()}}>
+            <Typography textAlign="center" variant="h6" noWrap component="a">
+              Log Out
+            </Typography>
+          </MenuItem>
              </Menu>
            </Box>
          </Toolbar>

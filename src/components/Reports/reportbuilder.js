@@ -6,7 +6,7 @@ import SecretKeys from "../../Secrets/SecretKeys";
 import { blue, green } from "@mui/material/colors";
 import { ErrorReport, reportError } from "../ErrorHandle/errorHandles";
 import { PreviewReport } from "./previewReport";
-import { Box, Grid,Button, Typography,TextField, Paper, Card } from "@mui/material";
+import { Box, Grid,Button, Typography,TextField, Paper, Card, Container, Stack } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send'
 
 
@@ -136,24 +136,30 @@ useEffect(()=>{
 },[searchIndustry])
    
     //console.log(searchIndustry)
-    return<Box sx={{flexGrow:1}} className="QuerySelect" margin={2}>
+    return<Stack direction="row" margin={"2%"}>
+        {/* <Box sx={{flexGrow:1}} className="QuerySelect" margin={2}> */}
         
-        <Grid container columns={2} sx={{flexGrow:1}}>
-           <Grid container item md={12}>
-                <Grid item md={4}>
-                    <Typography variant="h2" align="center">Report Options </Typography>
+           {/* <Grid container item md={12}>
+              > */}
+            
+            
+            
+            
+            <Grid item className="reportselection"  md={4} margin={"auto"}>
+                
+                <Grid item align="center">
+                    <Typography variant="h2" >Report Options </Typography>
                 </Grid>
-            </Grid>
-            
-            
-            <Grid container item colums={2} marginLeft={3} sx={{flexGrow:1}}>
-                <Paper>
-                    
-            
+                {/* <Box> */}
+                <Grid sx={{minHeight: "474px"}} container md={12} margin={"auto"} height={"88%"}> 
+                 <Paper >  
+                
+                {/* <Grid item md={12} > */}
                 <Grid item className="industryAutoComplete" 
-                md={4}
+                // md={6}
                 margin={2}
-                padding={"1rem"}
+                // padding={"1rem"}
+                fullWidth
                 >
                     <Autocomplete
                     disablePortal
@@ -162,10 +168,11 @@ useEffect(()=>{
                     getOptionLabel={(option)=>option.naicsTitle}
                     // defaultValue={""}
                      value={searchIndustry}
-                    sx={{width:400, height:50}}
+                    // sx={{width:400, height:50}}
                      //isOptionEqualToValue={(option, value)=> option===value}
                     renderInput={(params)=><TextField {...params} label="industries" variant="outlined"/>   } 
-                    onChange={(event,value)=>{setSearchIndustry(value)}}/>
+                    onChange={(event,value)=>{setSearchIndustry(value)}}
+                    fullWidth/>
                 </Grid>
 
                 <Grid item className="testing" 
@@ -178,7 +185,7 @@ useEffect(()=>{
                 <Grid item 
                  padding={2}
                 >
-                    <label htmlFor="reportFrequency">select frequency for the report</label>
+                    <label htmlFor="reportFrequency">select the frequency for the report</label>
                     <ul>
                     <li><input type="radio" 
                     name="reportFrequency" 
@@ -203,7 +210,7 @@ useEffect(()=>{
                 <Grid item padding={2}>
                     {/* <label htmlFor="reportName" >Enter Desired Report Title</label> */}
                     
-                    <TextField  id="reportName" label="Enter Desired Report Title" variant="outlined" value={reportTitle} onChange={(text)=>{setReportTitle(text.target.value)}}/>
+                    <TextField fullWidth id="reportName" label="Enter Desired Report Title" variant="outlined" value={reportTitle} onChange={(text)=>{setReportTitle(text.target.value)}}/>
                     
                 </Grid>
                 <Grid item padding={2}>{
@@ -211,34 +218,45 @@ useEffect(()=>{
                     ?""//reportPull()
             
 
-                    :<><Button variant="contained" endIcon={<SendIcon /> } onClick={(e)=>{errorHandle(e)}}>Generate Report</Button>
-                        <Button variant="contained" onClick={()=>{clearAndReset()}}>New Report</Button></>
+                    :<><Grid container margin={"auto"}><Grid item margin={"auto"}><Button variant="contained" endIcon={<SendIcon /> } onClick={(e)=>{errorHandle(e)}}>Generate Report</Button></Grid>
+                        <Grid item margin={"auto"}><Button variant="contained" onClick={()=>{clearAndReset()}}>New Report</Button></Grid></Grid></>
                     
                     }
                     <ErrorReport dataCheck={reportData}/>
                 </Grid>
-                
-                
-                
+                {/* </Grid> */}
                 </Paper>
-                 <Grid item md={8} marginLeft={2}>
-                 <Grid item  marginTop={-9} >
-            <Typography variant="h2" align="center">Report Preview </Typography>
+                </Grid>
+                {/* </Box>  */}
             </Grid>
-                    <Paper variant="outlined">
-                        <Grid item>
+                
+                
+                
+                
+                 <Grid item className="reportdata"  md={8} margin={"auto"}>
+                 
+            <Grid item  >
+            <Typography variant="h2" >Report Preview </Typography>
+            </Grid>
+                    
+                    
+                        <Grid item md={12} sx={{minHeight: "476px"}} className="reportpreview">
+                            {/* <Paper variant="outlined" className="reportPreviewPaper"> */}
+                                {/* <Grid item md={12} > */}
                 <PreviewReport PreviewData={reportData} userTitle={reportTitle} selectedYear={reportYear} 
-        industryDescript={searchIndustry} frequency={frequency} reportIdentity={reportIdentify} margin={2}/>
-        </Grid>
-        </Paper>
+        industryDescript={searchIndustry} frequency={frequency} reportIdentity={reportIdentify} />
+        {/* </Grid> */}
+        {/* </Paper> */}
         </Grid>
         
-                </Grid>
+        </Grid>
+        
+                </Stack>
                 {/* <Grid item md={6}> */}
                 
         {/* </Grid> */}
                 
-        </Grid>
+        {/* </Grid> */}
             
             
         
@@ -251,6 +269,6 @@ useEffect(()=>{
         
         
     
-    </Box>
+    // </Box>
     
 }

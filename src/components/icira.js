@@ -8,10 +8,14 @@ import { Authorized } from "./views/authorized"
 import { AppView } from "./views/appview"
 import { NavBar } from "./Nav/navbar"
 import { RecoverPassword } from "./auth/forgottenLogin"
+import { Typography } from "@mui/material"
     
 
 export const IciraView=()=>{
-        return <Routes>
+        return (
+        
+        
+        <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgotPassword" element={<RecoverPassword/>}/>
@@ -22,10 +26,13 @@ export const IciraView=()=>{
                     <>
                         <NavBar />
                         <AppView />
+                        
                     </>
                 </Authorized>
     
             } />
-        </Routes>
+        </Routes>)
+        
+        
     }
     
