@@ -155,7 +155,7 @@ export const NavBar=()=>{
              variant="h6"
              noWrap
              component="a"
-             href="/"
+             href="/home"
              sx={{
                mr: 2,
                display: { xs: 'none', md: 'flex' },
@@ -197,7 +197,7 @@ export const NavBar=()=>{
                sx={{
                  display: { xs: 'block', md: 'none' },
                }}
-             > {appBarMenu(`Welcom ${user.fullName}`, "")}
+             > {appBarMenu(`Welcome ${user.fullName}`, "/home")}
                {appBarMenu("Report Builder", "/builder")}
                {appBarMenu("My Reports", "myreports")}
 
@@ -232,7 +232,7 @@ export const NavBar=()=>{
            <Box sx={{ flexGrow: 0 }}>
              <Tooltip title="Open settings">
                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                 <Avatar alt={user.fullName}  />
+                 <Avatar alt={user.fullName}>{user?.fullName}</Avatar>
                  {/* {...stringAvatar(user.fullName)} */}
                </IconButton>
              </Tooltip>
