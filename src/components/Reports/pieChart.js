@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useInsertionEffect } from "react"
 import { Container, Grid, tooltipClasses } from "@mui/material"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend} from "chart.js"
 import {Chart, Pie} from "react-chartjs-2"
@@ -69,8 +69,8 @@ export const BuildChart =({ReportData,industry})=>{
       
       
         return <>
-        <Container sx={{ maxHeight: '500px' }}>
-          <Pie data={data}  />
+        <Container  sx={{ maxHeight: '500px' }}>
+          <Pie data={data}  id="printmeee"/>
 
         </Container>
         

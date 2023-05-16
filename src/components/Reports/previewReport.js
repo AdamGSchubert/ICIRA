@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useInsertionEffect } from "react"
 import { Grid, tooltipClasses, Button, Box, Typography, ButtonGroup, Paper,Container,Stack} from "@mui/material"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend} from "chart.js"
 import {Pie} from "react-chartjs-2"
 import { Route, useNavigate } from "react-router-dom"
 import { BuildChart } from "./pieChart"
 import SendIcon from '@mui/icons-material/Send'
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import ReactPDF, { Page, Text, View, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
 import { purple } from "@mui/material/colors"
+// // import CreatePdf from "../export/exportPDF"
+// import MyDocument from "../export/exportPDF"
+import CreatePdf from "../export/exportPDF"
 
 
 
@@ -167,27 +170,37 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
                                    }
                                            )
                 }
-     // chart data
+                // text for the report
+    const title =`${industryDescript ? industryDescript.naicsTitle : "Select an industry"} for ${selectedYear === 2023 ? "selected year" : selectedYear}`
+    const industry = `N.A.I.C.S. Code:${industryTotal?.[0]?.Industry}`
+    const industryCap =`Industry Total: ${industryTotal?.[0]?.DataValue ? usDollar.format(industryTotal?.[0]?.DataValue) : ""}`
+    const industryProfit =`Industry Gross Surplus (profit): ${grossOp?.[0]?.DataValue ? usDollar.format(grossOp?.[0]?.DataValue) : ""}`
+    const industryPay=`Industry Compensation: ${compensation?.[0]?.DataValue ? usDollar.format(compensation?.[0]?.DataValue) : ""}`
+    const industryTaxes =`Industry Taxes: ${industryTax?.[0]?.DataValue ? usDollar.format(industryTax?.[0]?.DataValue) : ""}`
+     const industryNote=<>{noteObj?.NoteText} </>   
+     const chartPDF = ()=>{
+        return <BuildChart ReportData={PreviewData} industry={industryDescript?.naicsTitle} />
+     }   
      
-    // const functionName =()=>{
-        // const labels=["total","Gross Surplus (Profit)", "Compensation","Tax" ]
-        // const data= [ usDollar.format(industryTotal?.[0]?.DataValue),usDollar.format(grossOp?.[0]?.DataValue) ]
+     
 
-    //}
+
+    const [chartImg, setChartImg]=useState("")
+    // //  const [chartInfo,setChartInfo]=useState()
+
+
+    function loadChart(){
+       const chart = document.getElementById("printmeee");
+       const image = new Image()
+        image.src=chart.toDataURL("image/jpg")
+        const [ info,base64]= image.src.split(",")
+        setChartImg(image.src)
+        // setChartInfo(info)
+        // console.log(xyz)
     
-    const printReport=()=>{
-        // var divContents = document.getElementById("printme").innerHTML;
-        // var a = window.open('', '', 'height=1920, width=1080');
-        // a.document.write('<html>');
-        // a.document.write('<body>');
-        // a.document.write(divContents);
-        // a.document.write('</body></html>');
-        // a.document.close();
-        window.print();
+        // chart = <>{chart}</>
     }
     
-           
-
     return <><Box >
         <Paper variant="outlined" >
         <Stack id="printme" sx={{minHeight: "440px"}} direction="row"className="PreviewStack" xs={12} margin={"2%"}>
@@ -205,34 +218,50 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
 
                     
                         <Grid item>
-                            <Typography>{industryDescript ? industryDescript.naicsTitle : "Select an industry"} for {selectedYear === 2023 ? "selected year" : selectedYear}
+                            <Typography>
+                                {/* {industryDescript ? industryDescript.naicsTitle : "Select an industry"} for {selectedYear === 2023 ? "selected year" : selectedYear} */}
+                                {title}
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Typography>N.A.I.C.S. Code:{industryTotal?.[0]?.Industry}
+                            <Typography>
+                                N.A.I.C.S. Code:{industryTotal?.[0]?.Industry}
+                                {/* {industry} */}
                             </Typography>
                         </Grid>
                     
                    
                         {/* this checks if the value from the BEA API object exist if not show blank*/}
                         <Grid item marginTop={"2rem"}>
-                            <Typography variant="h7">Industry Total: {industryTotal?.[0]?.DataValue ? usDollar.format(industryTotal?.[0]?.DataValue) : ""}
+                            <Typography variant="h7">
+                                Industry Total: {industryTotal?.[0]?.DataValue ? usDollar.format(industryTotal?.[0]?.DataValue) : ""}
+                                {/* {industryCap} */}
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant="h7">Industry Gross Surplus (profit): {grossOp?.[0]?.DataValue ? usDollar.format(grossOp?.[0]?.DataValue) : ""}
+                            <Typography variant="h7">
+                                Industry Gross Surplus (profit): {grossOp?.[0]?.DataValue ? usDollar.format(grossOp?.[0]?.DataValue) : ""}
+                                {/* {industryProfit} */}
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant="h7">Industry Compensation: {compensation?.[0]?.DataValue ? usDollar.format(compensation?.[0]?.DataValue) : ""}
+                            <Typography variant="h7">
+                                Industry Compensation: {compensation?.[0]?.DataValue ? usDollar.format(compensation?.[0]?.DataValue) : ""}
+                                {/* {industryPay} */}
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant="h7">Industry Taxes: {industryTax?.[0]?.DataValue ? usDollar.format(industryTax?.[0]?.DataValue) : ""}
+                            <Typography variant="h7">
+                                Industry Taxes: {industryTax?.[0]?.DataValue ? usDollar.format(industryTax?.[0]?.DataValue) : ""}
+                                {/* {industryTaxes} */}
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Typography wrap>{noteObj?.NoteText}</Typography></Grid>
+                            <Typography >
+                                {noteObj?.NoteText}
+                                {/* {industryNote} */}
+                                </Typography>
+                                </Grid>
                             
             </Grid>
         <Grid item xs={6} >
@@ -242,11 +271,24 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
             <Grid item xs={2} margin={"auto"} marginLeft={"2%"}>
                 {
                     reportID
-                        ? <> <ButtonGroup variant="outlined" color="secondary" orientation="vertical">
+                        ? <> <ButtonGroup variant="outlined" color="secondary"  orientation="vertical">
                             <Button onClick={() => { deleteReport(reportID) }} >delete </Button>
                             <Button onClick={() => { editSelected(reportID) }} >edit </Button>
-                            <Button onClick={()=>{ printReport()}} >export to PDF </Button>
+                            
+                             <Button onClick={loadChart}>
+                                <PDFDownloadLink document={<CreatePdf 
+                                ChartReportData={PreviewData} chartIndustry={industryDescript?.naicsTitle} 
+                                myTitle={userTitle} industryTitle={title} tax={industryTaxes} 
+                                total={industryCap} industry={industry} profit={industryProfit} 
+                                pay={industryPay} note={industryNote} chartImage={chartImg} />} fileName={userTitle}>
+                                {({loading})=> (loading ? "Loading Report": "Export to PDF")}
+                            </PDFDownloadLink> </Button>
+                               {//}  
+                               //chartImgData={chartInfo}chartImage={chartImg}
+                            }
+                                
                         </ButtonGroup>
+                       
                         </>
                         : reportIdentity ? <Button onClick={() => { updateReport(reportIdentity) }} >Update Report </Button>
 
@@ -254,7 +296,10 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
                                     
                                     
 
-                }
+                } 
+                <div>
+                
+                            </div>
             </Grid>
       
         
