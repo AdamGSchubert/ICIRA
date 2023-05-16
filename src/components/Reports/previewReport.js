@@ -271,7 +271,7 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
             <Grid item xs={2} margin={"auto"} marginLeft={"2%"}>
                 {
                     reportID
-                        ? <> <ButtonGroup variant="outlined" color="secondary"  orientation="vertical">
+                        ? <> <ButtonGroup variant="contained" color="primary"  orientation="vertical">
                             <Button onClick={() => { deleteReport(reportID) }} >delete </Button>
                             <Button onClick={() => { editSelected(reportID) }} >edit </Button>
                             
@@ -281,7 +281,7 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
                                 myTitle={userTitle} industryTitle={title} tax={industryTaxes} 
                                 total={industryCap} industry={industry} profit={industryProfit} 
                                 pay={industryPay} note={industryNote} chartImage={chartImg} />} fileName={userTitle}>
-                                {({loading})=> (loading ? "Loading Report": "Export to PDF")}
+                                {({loading})=> (loading ? "Prepare PDF Report ": "Export to PDF")}
                             </PDFDownloadLink> </Button>
                                {//}  
                                //chartImgData={chartInfo}chartImage={chartImg}
@@ -290,7 +290,7 @@ export const PreviewReport =({PreviewData, userTitle, selectedYear, industryDesc
                         </ButtonGroup>
                        
                         </>
-                        : reportIdentity ? <Button onClick={() => { updateReport(reportIdentity) }} >Update Report </Button>
+                        : reportIdentity ? <Button variant="contained" onClick={() => { updateReport(reportIdentity) }} >Update Report </Button>
 
                             : <Button variant="contained" endIcon={<SendIcon />} onClick={(event) => { saveReport(event) }}>Save Report</Button>
                                     

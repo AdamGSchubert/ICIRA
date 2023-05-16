@@ -66,7 +66,7 @@ export const Login = () => {
     return (<>
 
         <Box sx={{flexGrow:1}}>
-        <Grid container md={12} >
+        <Grid container  >
                 <Grid item margin={"auto"} align="center">
                     <Typography variant="h2">I.C.I.R.A.</Typography>
                     </Grid>
@@ -123,7 +123,7 @@ export const Login = () => {
                                         name="email address"
                                         type="email"
                                         defaultValue={email}
-                                        helperText="example JohnDoe@email.com"
+                                        // helperText="example JohnDoe@email.com"
                                         onChange={evt => set(evt.target.value)}
                                         required
                                     />
@@ -181,7 +181,8 @@ export const Login = () => {
 
                 <Grid item md={12} marginTop={"1rem"} align="center">
                     <Paper>
-                    <Typography>this is description of stuff</Typography>
+                    <Typography>Industry Analyitic Data is provided via US Government Bureau of Economic Analysis.</Typography>
+                    <Typography>The Bureau of Economic Analysis (BEA) is a branch of the US Government Department of Commerce.</Typography>
                     </Paper>
                 </Grid>
                 </Grid>

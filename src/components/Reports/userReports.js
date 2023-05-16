@@ -77,17 +77,17 @@ const navigate =useNavigate()
     </Grid>
     </Grid>
         <Box margin={5} >
-            <Grid container md={12}>
+            <Grid container >
                     <Paper>
                         </Paper>
                     
                 </Grid>
-            <Grid container className="reportCards" md={12}  rowGap={2} columnGap={1} sx={{flexGrow:1}}>
+            <Grid container className="reportCards"   rowGap={2} columnGap={1} sx={{flexGrow:1}}>
                 {/* xs={12} sx={{flexGrow:1}} paddingLeft={5}*/}
                 {
                     
                     reversedReports.map((report)=>{
-                        return <Grid container margin="auto" xs={8}  alignItems={"center"}  >
+                        return <Grid container item margin="auto" xs={8}  alignItems={"center"}  >
                             <Grid item xs align="center" margin={"auto"} >
                         <Card variant="outlined" key={report.id}  >
                          
@@ -107,7 +107,7 @@ const navigate =useNavigate()
                         </Grid> 
                          <Grid item xs={2} margin={"auto"} align="center">
                             
-                            <ButtonGroup orientation="horizontal" variant="outlined" color="secondary" >
+                            <ButtonGroup orientation="horizontal" variant="contained" color="primary" >
                                 <Button  onClick={()=>{navigate(`/myreports/${report.id}`)}}>view</Button>
                                 <Button onClick={()=>{editSelected(report.id)}}>edit</Button>
                                 <Button onClick={()=>{deleteReport(report.id)}}>delete</Button>

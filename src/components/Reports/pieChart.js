@@ -13,7 +13,7 @@ export const BuildChart =({ReportData,industry})=>{
     const [chartLabel, setChartLabel]=useState([])
 
 
-
+  
 
     useEffect(()=>{
         setDataObjects(ReportData?.BEAAPI?.Results?.[0]?.Data)

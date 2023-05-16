@@ -105,13 +105,16 @@ const updateName =(name)=>{
                         <Grid item padding={2}>
                             <TextField fullWidth id="outlined-basic" label="Full Name" variant="outlined" onChange={(evt) => { updateName(evt.target.value) }} />
                         </Grid>
+                        {/* <Grid item padding={2}>
+                            <TextField fullWidth id="outlined-basic" label="Full Name" variant="outlined" onChange={(evt) => { updateName(evt.target.value) }} />
+                        </Grid> */}
                         <Grid item padding={2}>
                             <Button fullWidth variant="contained" color="primary" onClick={() => { updateUserName() }} endIcon={<LogoutIcon />}>Update Name</Button>
                         </Grid>
                         <Grid item>
                             <ErrorReport username={error}/>
                         </Grid>
-                        <Grid item padding={2}>
+                        {/* <Grid item padding={2}>
                             <TextField fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={(evt) => { updatePassword(evt.target.value) }} />
                         </Grid>
                         <Grid item padding={2}>
@@ -119,10 +122,10 @@ const updateName =(name)=>{
                         </Grid>
                         <Grid item padding={2}>
                             <Button fullWidth variant="contained" color="primary" onClick={() => { }} endIcon={<LogoutIcon />}>Update Password</Button>
-                        </Grid>
-                        <Grid item padding={2}>
+                        </Grid> */}
+                        {/* <Grid item padding={2}>
                             <Button fullWidth variant="contained" color="error" onClick={() => { LogOut() }} endIcon={<LogoutIcon />}>log Out</Button>
-                        </Grid>
+                        </Grid> */}
                     </Stack>
                 </Grid>
                 <Grid item padding={5} md={6} align={"center"} margin={"auto"}>
@@ -130,22 +133,9 @@ const updateName =(name)=>{
                             <Typography variant="h4">Your Current Details</Typography>
                         </Grid>
                         <Grid item padding={2}>
-                        <Typography>{user?.fullName}</Typography>
+                        <Typography>{user?.firstName} {user?.lastName}</Typography>
                         </Grid>
-                        <Grid item padding={2}>
-                        <Typography></Typography>
-                        </Grid>
-                        <Grid item padding={2}>
-                        <Typography></Typography>
-                        </Grid>
-                        <Grid item padding={2}>
-                            <Typography></Typography>
-                        </Grid>
-
-
-
-
-
+                        
                 </Grid>
             </Grid>
         </Paper>
