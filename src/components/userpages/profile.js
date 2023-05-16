@@ -133,7 +133,7 @@ const updateName =(name)=>{
                             <Typography variant="h4">Your Current Details</Typography>
                         </Grid>
                         <Grid item padding={2}>
-                        <Typography>{user?.firstName} {user?.lastName}</Typography>
+                        <Typography>{user?.fullName} </Typography>
                         </Grid>
                         
                 </Grid>
