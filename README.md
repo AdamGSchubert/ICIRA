@@ -2,7 +2,7 @@
 Repository for NSS front end capstone- industry GDP data reporting tool.
  
  
- I.C.I.R.A or Industry Costs Intellegence Report Application
+ I.C.I.R.A or Industial Costs Index Report Application
  
  This application accesses the API provided by the United States Department of Commerce Bureau of Economic Analysis (BEA). 
  
