@@ -15,7 +15,7 @@ I.C.I.R.A or Industrial Costs Index Report Application
  
  
 This functionality is done by utilizing the following frameworks:
-* react framework
+* React framework
 * Material UI CSS 
 * React-ChartJS, 
 * React-PDF
