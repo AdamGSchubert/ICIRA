@@ -6,7 +6,7 @@ I.C.I.R.A or Industial Costs Index Report Application
  
  The application allows a user to register for an account using a form requiring the following details: Full Name, Email Address, and password field.
  
- once a user account has been created the user will gain access to the instructions on the data that this provides and general use instruction for the report builder. The ability to:
+ Once a user account has been created the user will gain access to the instructions on the data that this provides and general use instruction for the report builder. The ability to:
  *  create reports
  *  save reports associated with their user
  *  edit or view saved reports
@@ -26,3 +26,5 @@ This functionality is done by utilizing the following frameworks:
  
  future functionality
  - OAuth authentication for social accounts (ie: google accounts)
+ - SQL Database migration
+
